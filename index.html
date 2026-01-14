@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Challenge Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .box {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      background: #ff4d4d;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #444;
+    }
+
+    .stat {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    footer {
+      padding: 15px;
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🔥 Challenge Hub</h1>
+  <p>Influence real challenges in real time</p>
+</header>
+
+<div class="container">
+
+  <div class="box">
+    <h2>🎯 Live Challenge</h2>
+    <p><strong>Last to Leave the Room</strong></p>
+    <p>Support the challenge to raise the difficulty.</p>
+  </div>
+
+  <div class="box">
+    <h2>⚡ Challenge Effects</h2>
+
+    <div class="stat">⏱ Time Added: <span id="time">0</span> minutes</div>
+    <div class="stat">🪑 Comfort Removed: <span id="comfort">0</span></div>
+
+    <button onclick="addTime()">Donate £1 → Add 1 Minute</button>
+    <button onclick="removeComfort()">Donate £1 → Remove Comfort</button>
+  </div>
+
+  <div class="box">
+    <h2>🏆 Leaderboard</h2>
+
+    <div class="stat">💰 Total Support: £<span id="total">0</span></div>
+    <div class="stat">❤️ Total Supports: <span id="supports">0</span></div>
+  </div>
+
+</div>
+
+<footer>
+  Donations support entertainment only.  
+  Donations do not guarantee outcomes or prizes.
+</footer>
+
+<script>
+  let total = 0;
+  let supports = 0;
+  let time = 0;
+  let comfort = 0;
+
+  function addTime() {
+    total += 1;
+    supports += 1;
+    time += 1;
+    update();
+  }
+
+  function removeComfort() {
+    total += 1;
+    supports += 1;
+    comfort += 1;
+    update();
+  }
+
+  function update() {
+    document.getElementById("total").innerText = total;
+    document.getElementById("supports").innerText = supports;
+    document.getElementById("time").innerText = time;
+    document.getElementById("comfort").innerText = comfort;
+  }
+</script>
+
+</body>
+</html>
