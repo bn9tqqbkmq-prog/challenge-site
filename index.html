@@ -1328,7 +1328,7 @@ function logAction(msg){
   refs.feed.push({ msg, ts: Date.now() });
 }
 
-/***********************
+ /***********************
  * SUPPORT ACTIONS
  ***********************/
 function supportAction(type, pounds){
@@ -1340,34 +1340,38 @@ function supportAction(type, pounds){
     ? `⚡ ${name} supported £${pounds} → +${pounds} minute (+${influence} Influence)`
     : `😈 ${name} supported £${pounds} → comfort removed (+${influence} Influence)`;
 
-    if(localMode){
-    local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
-    local.bounties = local.bounties.slice(0, 50);
-    renderBounties(local.bounties);
-    logAction(`🧩 ${name} submitted an idea (pending)`);
-    return;
-  }
-
-  refs.bounties.push(bounty);
-  logAction(`🧩 ${name} submitted an idea (pending)`);
-}
-
-function approveLatestBounty(){
-  if(!isHost()) return alert("Host only.");
-
+  // ✅ LOCAL mode updates
   if(localMode){
-    const item = local.bounties.find(b => b.status === "pending");
-    if(!item) return alert("No pending ideas.");
-    item.status = "approved";
-    renderBounties(local.bounties);
-    logAction(`✅ Host approved an idea: "${item.text}"`);
+    local.totals.total += pounds;
+    local.totals.supports += 1;
+    if(type === "time") local.totals.time += pounds;
+    if(type === "comfort") local.totals.comfort += 1;
+
+    renderTotals(local.totals);
+    addMyCoins(influence);
+    logAction(msg);
     return;
   }
 
-  const pending = (live.bounties || []).find(b => b.status === "pending");
-  if(!pending) return alert("No pending ideas.");
-  refs.bounties.child(pending.id).child("status").set("approved");
-  logAction(`✅ Host approved an idea: "${pending.text}"`);
+  // ✅ GLOBAL mode updates (Firebase)
+  refs.totals.child("total").transaction(cur => (cur||0) + pounds);
+  refs.totals.child("supports").transaction(cur => (cur||0) + 1);
+  if(type === "time") refs.totals.child("time").transaction(cur => (cur||0) + pounds);
+  if(type === "comfort") refs.totals.child("comfort").transaction(cur => (cur||0) + 1);
+
+  addMyCoins(influence);
+  logAction(msg);
+
+  // Instant UI update (so it feels responsive even before Firebase syncs)
+  if(!localMode){
+    // if totals listener hasn't fired yet, this prevents "nothing happened" feeling
+    if(!live.totals) live.totals = { total:0, supports:0, time:0, comfort:0 };
+    live.totals.total += pounds;
+    live.totals.supports += 1;
+    if(type === "time") live.totals.time += pounds;
+    if(type === "comfort") live.totals.comfort += 1;
+    renderTotals(live.totals);
+  }
 }
 
 /***********************
