@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Challenge Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      margin:0;
+      font-family: Inter, Arial, sans-serif;
+      color:#fff;
+      text-align:center;
+      background: radial-gradient(1200px 600px at 20% 0%, #1c1c1c 0%, #0b0b0b 45%, #000 100%);
+    }
+
+    header{
+      padding: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* Grid layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 18px;
+    }
+    @media (min-width: 900px){
+      .grid{ grid-template-columns: 1.1fr 0.9fr; }
+      #rightCol{ position: sticky; top: 14px; align-self: start; }
+    }
+
+    /* Card style */
+    .box{
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 18px;
+      margin: 0; /* grid handles spacing */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+      text-align: left;
+    }
+
+    /* Typography */
+    h1,h2{ margin: 0 0 10px 0; }
+    h2{ font-size: 18px; }
+    p{ margin: 0 0 10px 0; opacity: 0.9; line-height: 1.5; }
+
+    .stat{
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    /* Buttons */
+    button{
+      width:100%;
+      padding:14px 16px;
+      margin-top:10px;
+      border:none;
+      border-radius:12px;
+      color:#fff;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      background: linear-gradient(135deg, #ff4d4d 0%, #ff1f6a 100%);
+      box-shadow: 0 10px 20px rgba(255,77,77,0.25);
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+    button:hover{ filter: brightness(1.08); }
+    button:active{ transform: scale(0.97); }
+
+    button.secondary{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow:none;
+    }
+
+    footer{
+      padding: 18px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      max-width: 1000px;
+      margin: 0 auto 20px auto;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="box" style="border:2px solid #ff4d4d; max-width:1000px; margin:0 auto;">
+      <h2 style="margin-bottom:6px;">🔴 Audience Controls the Challenge</h2>
+      <p style="margin:0;">Watch live. Vote. Change what happens.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- LEFT COLUMN -->
+    <div id="leftCol">
+      <div class="box" id="watch">
+        <h2>⏳ Live Starting Soon</h2>
+        <p>We’re preparing our first live challenge.</p>
+        <p>Come back soon to watch and take control.</p>
+      </div>
+
+      <div class="box">
+        <h2>🎯 Live Challenge</h2>
+        <p><strong>Last to Leave the Room</strong></p>
+        <p>Support the challenge to raise the difficulty.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div id="rightCol">
+      <div class="box">
+        <h2>⚡ Challenge Effects</h2>
+
+        <div class="stat">⏱ Time Added: <span id="time">0</span> minutes</div>
+        <div class="stat">🪑 Comfort Removed: <span id="comfort">0</span></div>
+
+        <button onclick="addTime()">⚡ Add 1 Minute</button>
+        <button onclick="removeComfort()">😈 Remove Comfort</button>
+
+        <button class="secondary" onclick="resetAll()">Reset After Event</button>
+      </div>
+
+      <div class="box">
+        <h2>🏆 Leaderboard</h2>
+        <div class="stat">💰 Total Support: £<span id="total">0</span></div>
+        <div class="stat">❤️ Total Supports: <span id="supports">0</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Donations support entertainment only. Donations do not guarantee outcomes or prizes.
+  </footer>
+
+  <script>
+    let total = 0;
+    let supports = 0;
+    let time = 0;
+    let comfort = 0;
+
+    function addTime() {
+      total += 1;
+      supports += 1;
+      time += 1;
+      update();
+    }
+
+    function removeComfort() {
+      total += 1;
+      supports += 1;
+      comfort += 1;
+      update();
+    }
+
+    function resetAll() {
+      total = 0;
+      supports = 0;
+      time = 0;
+      comfort = 0;
+      update();
+    }
+
+    function update() {
+      document.getElementById("total").innerText = total;
+      document.getElementById("supports").innerText = supports;
+      document.getElementById("time").innerText = time;
+      document.getElementById("comfort").innerText = comfort;
+    }
+  </script>
+
+</body>
+</html>
