@@ -642,7 +642,29 @@
         <button class="secondary" onclick="resetEvent()">Reset Event</button>
         <p class="muted2" style="margin-top:10px;">
           Real version: Firebase Auth + DB rules (never ship a PIN in JS).
-        </p>
+        </p> <hr style="opacity:.25; margin:14px 0">
+
+<h3 style="margin:0 0 8px 0;">🎛 Creator Dashboard</h3>
+
+<input
+  id="cdQuestion"
+  placeholder="Decision question (e.g. What happens next?)"
+/>
+
+<textarea
+  id="cdOptions"
+  placeholder="One option per line
+Example:
+Ice water
+Hard mode 5 min
+No sitting"
+  style="margin-top:8px;"
+></textarea>
+
+<div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+  <button class="secondary" onclick="createDecision()">Create Decision</button>
+  <button class="secondary" onclick="extendDecision(5)">+5 minutes</button>
+</div>
       </div>
 
       <div id="hostUnlock" style="margin-top:10px;">
