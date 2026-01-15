@@ -1360,7 +1360,82 @@ function closeDecision(){
   // Close for everyone
   refs.decision.update({ closed: true, endsAt: Date.now() });
 }
+/***********************
+ * CREATOR DASHBOARD ACTIONS
+ ***********************/
 
+// Create a new decision (question + options) from the dashboard inputs
+function createDecision(){
+  if(!isHost()) return alert("Host only.");
+
+  const q = (document.getElementById("cdQuestion")?.value || "").trim();
+  const raw = (document.getElementById("cdOptions")?.value || "").trim();
+
+  if(q.length < 5) return alert("Write a clearer question (min 5 chars).");
+  if(raw.length < 3) return alert("Add at least 2 options (one per line).");
+
+  // One option per line, cleaned
+  const lines = raw
+    .split("\n")
+    .map(s => s.trim())
+    .filter(Boolean)
+    .slice(0, 6); // keep it tight for v1
+
+  if(lines.length < 2) return alert("Add at least 2 options.");
+
+  // Build options object (a,b,c,d,e,f)
+  const keys = ["a","b","c","d","e","f"];
+  const options = {};
+  lines.forEach((name, i) => {
+    options[keys[i]] = { name, votes: 0 };
+  });
+
+  const newDecision = {
+    endsAt: Date.now() + 15*60*1000, // 15 min
+    closed: false,
+    question: q,
+    desc: "Spend Influence to vote. First 100 Influence is strongest; after that votes diminish.",
+    options,
+    usedBy: {}
+  };
+
+  // Clear inputs (nice UX)
+  document.getElementById("cdQuestion").value = "";
+  document.getElementById("cdOptions").value = "";
+
+  // Save
+  if(localMode){
+    local.decision = newDecision;
+    renderDecision(local.decision);
+    tickCountdown();
+    logAction(`🎛 Host created a new decision: "${q}"`);
+    return;
+  }
+
+  refs.decision.set(newDecision);
+  logAction(`🎛 Host created a new decision: "${q}"`);
+}
+
+// Extend current decision by N minutes
+function extendDecision(minutes){
+  if(!isHost()) return alert("Host only.");
+  minutes = Number(minutes) || 0;
+  if(minutes <= 0) return;
+
+  if(localMode){
+    local.decision.endsAt = (local.decision.endsAt || Date.now()) + minutes*60*1000;
+    local.decision.closed = false;
+    renderDecision(local.decision);
+    tickCountdown();
+    logAction(`⏳ Host extended decision by +${minutes} minutes`);
+    return;
+  }
+
+  refs.decision.child("endsAt").transaction(cur => (cur || Date.now()) + minutes*60*1000);
+  refs.decision.child("closed").set(false);
+  logAction(`⏳ Host extended decision by +${minutes} minutes`);
+}
+  
 function resetEvent(){
   if(!isHost()) return alert("Host only.");
   const msg = "🔁 Host reset the event";
