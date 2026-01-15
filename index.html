@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>ChallengeVerse — Watch • Vote • Unlock</title>
+  <title>ChallengeVerse — Watch • Influence • Decide</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Font -->
@@ -16,26 +16,34 @@
 
   <style>
     :root{
-      --glass: rgba(255,255,255,0.06);
+      --bg0:#050505;
+      --glass: rgba(255,255,255,0.07);
+      --glass2: rgba(0,0,0,0.35);
       --stroke: rgba(255,255,255,0.13);
-      --stroke2: rgba(255,255,255,0.18);
+      --stroke2: rgba(255,255,255,0.20);
       --hot1:#ff4d4d;
       --hot2:#ff1f6a;
       --good1:#2af598;
       --good2:#00c3ff;
+      --warn:#ffd24d;
+      --text2: rgba(255,255,255,0.74);
+      --text3: rgba(255,255,255,0.62);
     }
-    *{ box-sizing:border-box; }
+
+    *{ box-sizing: border-box; }
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:#fff;
-      background: radial-gradient(1200px 700px at 18% 0%, #1a1a1a 0%, #0b0b0b 45%, #000 100%);
+      background:
+        radial-gradient(1200px 700px at 18% 0%, #1a1a1a 0%, #0b0b0b 45%, #000 100%);
     }
 
+    /* ===== Top bar ===== */
     header{
       position: sticky; top:0; z-index: 50;
       backdrop-filter: blur(12px);
-      background: rgba(0,0,0,0.28);
+      background: rgba(0,0,0,0.30);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .wrap{ max-width: 1180px; margin:0 auto; padding: 14px 12px; }
@@ -50,7 +58,7 @@
       letter-spacing: 0.5px;
     }
     .title{ margin:0; font-weight: 900; font-size: 16px; line-height: 1.2; }
-    .subtitle{ margin:3px 0 0 0; opacity: 0.75; font-size: 12px; line-height: 1.3; }
+    .subtitle{ margin:3px 0 0 0; opacity: 0.78; font-size: 12px; line-height: 1.3; }
     .pill{
       display:inline-flex; gap:8px; align-items:center;
       padding:8px 10px; border:1px solid var(--stroke);
@@ -69,8 +77,8 @@
       100%{ transform: scale(1); opacity: 1; }
     }
     .topRight{ display:flex; gap:10px; align-items:center; flex-wrap: wrap; justify-content:flex-end; }
-    .modeTag{ font-weight: 800; }
 
+    /* ===== Layout ===== */
     .grid{
       max-width: 1180px;
       margin: 0 auto;
@@ -80,7 +88,7 @@
       gap: 14px;
     }
     @media (min-width: 1040px){
-      .grid{ grid-template-columns: 1.35fr 0.65fr; }
+      .grid{ grid-template-columns: 1.4fr 0.6fr; }
       #rightCol{ position: sticky; top: 86px; align-self: start; }
     }
 
@@ -93,8 +101,9 @@
       backdrop-filter: blur(10px);
     }
     h2{ margin:0 0 10px 0; font-size: 15px; letter-spacing: 0.2px; }
-    p{ margin:0 0 10px 0; opacity: 0.9; line-height: 1.5; }
-    .muted{ opacity: 0.7; font-size: 12px; }
+    p{ margin:0 0 10px 0; opacity: 0.92; line-height: 1.5; }
+    .muted{ color: var(--text2); font-size: 12px; margin: 0; line-height: 1.45; }
+    .muted2{ color: var(--text3); font-size: 12px; margin: 0; line-height: 1.45; }
     .row{ display:flex; gap:10px; align-items:center; justify-content: space-between; flex-wrap: wrap; }
 
     button{
@@ -138,6 +147,7 @@
     }
     textarea{ resize: vertical; min-height: 86px; }
 
+    /* ===== Video ===== */
     .videoShell{
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 18px;
@@ -159,44 +169,83 @@
     }
     iframe{ width:100%; height:100%; border:0; }
 
-    .shortsGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    /* ===== Tabs ===== */
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
-    @media (min-width: 760px){
-      .shortsGrid{ grid-template-columns: 1fr 1fr; }
+    .tabBtn{
+      width:auto;
+      margin:0;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: none;
     }
-    .shortCard{
-      border-radius: 18px;
+    .tabBtn.active{
+      background: linear-gradient(135deg, rgba(255,77,77,0.80), rgba(255,31,106,0.80));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 12px 22px rgba(255,77,77,0.14);
+    }
+    .tabPanel{ display:none; margin-top: 12px; }
+    .tabPanel.active{ display:block; }
+
+    /* ===== Poll ===== */
+    .pollOpt{
+      padding: 12px;
+      border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(0,0,0,0.25);
-      overflow: hidden;
-      min-height: 160px;
-      position: relative;
+      margin-top: 10px;
     }
-    .shortThumb{
-      height: 130px;
-      background:
-        radial-gradient(500px 240px at 18% 20%, rgba(0,195,255,0.16), transparent 55%),
-        radial-gradient(520px 240px at 75% 0%, rgba(255,31,106,0.18), transparent 58%),
-        rgba(0,0,0,0.32);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    .pollHead{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content: space-between;
     }
-    .shortBody{ padding: 12px; }
-    .shortTitle{ margin:0; font-weight: 900; font-size: 14px; }
-    .shortMeta{ margin:6px 0 0 0; font-size: 12px; opacity: 0.7; }
-    .badgeRow{ display:flex; gap:8px; flex-wrap: wrap; margin-top: 10px; }
-    .chip{
-      font-size: 12px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.25);
-      opacity: 0.92;
+    .pollName{
+      margin:0;
+      font-weight: 900;
+      font-size: 14px;
       white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .pollMeta{ margin:6px 0 0 0; font-size: 12px; color: var(--text2); }
+    .pollBarWrap{
+      margin-top: 10px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+    .pollBar{
+      height:100%;
+      width:0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,77,77,0.95), rgba(255,31,106,0.95));
+      transition: width .25s ease;
+    }
+    .leading{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      font-size: 12px;
+      font-weight: 900;
     }
 
+    /* ===== Stats cards ===== */
     .statGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -208,9 +257,10 @@
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(0,0,0,0.25);
     }
-    .statLabel{ font-size: 12px; opacity: 0.7; margin:0 0 6px 0; }
+    .statLabel{ font-size: 12px; color: var(--text3); margin:0 0 6px 0; }
     .statValue{ font-size: 18px; font-weight: 900; margin:0; }
 
+    /* ===== Milestones ===== */
     .progress{
       height: 12px;
       border-radius: 999px;
@@ -229,29 +279,7 @@
       background: linear-gradient(90deg, rgba(38,230,164,0.95), rgba(0,195,255,0.95));
     }
 
-    .pollOpt{
-      display:flex; gap:10px; align-items:center; justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.25);
-      margin-top: 10px;
-    }
-    .pollLeft{ min-width: 0; }
-    .pollName{
-      margin:0; font-weight: 900; font-size: 14px;
-      white-space: nowrap; overflow:hidden; text-overflow: ellipsis;
-    }
-    .pollMeta{ margin:6px 0 0 0; font-size: 12px; opacity: 0.7; }
-    .pollBtn{
-      width:auto; margin:0;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
+    /* ===== Feeds ===== */
     .feed{
       list-style:none;
       padding:0;
@@ -267,8 +295,11 @@
       background: rgba(0,0,0,0.25);
       font-size: 13px;
       opacity: 0.96;
+      line-height: 1.4;
     }
+    .feed small{ color: var(--text3); display:block; margin-top: 4px; }
 
+    /* ===== Alerts ===== */
     #liveAlert{
       display:none;
       margin-top: 10px;
@@ -279,13 +310,42 @@
       font-weight: 900;
     }
 
-    .hint{
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.20);
-      border-radius: 14px;
-      padding: 10px 12px;
+    /* ===== Onboarding modal ===== */
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.62);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      z-index: 200;
+    }
+    .modal{
+      width: 100%;
+      max-width: 520px;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+    }
+    .steps{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
       margin-top: 10px;
     }
+    .step{
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .step strong{ display:block; margin-bottom: 4px; }
+    .modalActions{ display:flex; gap:10px; flex-wrap: wrap; margin-top: 12px; }
+    .modalActions button{ width:auto; margin:0; padding: 10px 12px; }
 
     footer{
       max-width: 1180px;
@@ -295,32 +355,43 @@
       font-size: 12px;
       text-align: center;
     }
+
+    /* Small helper */
+    .tinyLink{
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,0.35);
+      text-underline-offset: 3px;
+    }
   </style>
 </head>
 
 <body>
+
 <header>
   <div class="wrap topbar">
     <div class="brand">
       <div class="logo">CV</div>
       <div>
         <p class="title" id="arcTitle">ChallengeVerse — “Last To Leave” (Season 1)</p>
-        <p class="subtitle" id="arcSubtitle">YouTube depth + Twitch live control + TikTok discovery — in one room.</p>
+        <p class="subtitle" id="arcSubtitle">Watch live. Earn Influence. Decide the next twist (safe + host-approved).</p>
       </div>
     </div>
 
     <div class="topRight">
       <span class="pill"><span class="dot"></span> LIVE ARC</span>
       <span class="pill">Mode: <strong class="modeTag" id="modeLabel">Local</strong></span>
-      <span class="pill">Next decision: <strong id="decisionCountdown">—</strong></span>
+      <span class="pill">Decision ends: <strong id="decisionCountdown">—</strong></span>
+      <span class="pill tinyLink" onclick="openOnboarding(true)">How it works</span>
     </div>
   </div>
 </header>
 
 <div class="grid">
-  <!-- LEFT -->
+  <!-- LEFT: Watch + Primary Flow Tabs -->
   <div id="leftCol">
-    <div class="box">
+
+    <div class="box" id="watchBox">
       <div class="row">
         <h2 style="margin:0;">📺 Watch</h2>
         <span class="pill">Room: <strong id="roomKey">challengeHub</strong></span>
@@ -328,113 +399,222 @@
 
       <div class="videoShell" style="margin-top:10px;">
         <div class="videoTop">
-          <span class="pill">Stream source: <strong id="streamSourceLabel">Placeholder</strong></span>
-          <button class="secondary pollBtn" style="width:auto; margin:0;" onclick="toggleStreamConfig()">Set Stream</button>
+          <span class="pill">Source: <strong id="streamSourceLabel">Placeholder</strong></span>
+          <button id="setStreamBtn" class="secondary tabBtn" style="display:none;" onclick="toggleStreamConfig()">Set Stream</button>
         </div>
         <div class="videoFrame" id="videoFrame">
           <div style="text-align:center; max-width: 520px;">
             <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
-            <p class="muted" style="margin:8px 0 0 0;">Add a YouTube/Twitch embed in “Set Stream”.</p>
+            <p class="muted" style="margin-top:8px;">Host can set a YouTube/Twitch embed (hidden for viewers).</p>
           </div>
         </div>
       </div>
 
       <div id="streamConfig" style="display:none; margin-top:12px;">
-        <p class="muted">Pick a provider and paste the embed URL.</p>
+        <p class="muted">Host: pick a provider and paste the embed URL.</p>
         <select id="streamProvider">
           <option value="youtube">YouTube (embed URL)</option>
           <option value="twitch">Twitch (embed URL)</option>
         </select>
-        <input id="streamUrl" placeholder="Example: https://www.youtube.com/embed/VIDEO_ID (or Twitch embed URL)" />
+        <input id="streamUrl" placeholder="Example: https://www.youtube.com/embed/VIDEO_ID" />
         <button class="good" onclick="saveStream()">Save Stream</button>
-        <div class="hint">
-          <p style="margin:0;"><strong>Tip:</strong> Use embed URLs (not normal watch URLs).</p>
-          <p class="muted" style="margin:6px 0 0 0;">Twitch embeds need <em>parent=yourdomain</em> when hosted online.</p>
+        <p class="muted2" style="margin-top:10px;">
+          Twitch embed requires <code>parent=yourdomain</code> once hosted online.
+        </p>
+      </div>
+
+      <!-- Primary flow tabs -->
+      <div class="tabs" aria-label="Main actions">
+        <button class="tabBtn active" data-tab="voteTab" onclick="selectTab('voteTab')">Vote</button>
+        <button class="tabBtn" data-tab="supportTab" onclick="selectTab('supportTab')">Support</button>
+        <button class="tabBtn" data-tab="ideasTab" onclick="selectTab('ideasTab')">Ideas</button>
+        <button class="tabBtn" data-tab="feedTab" onclick="selectTab('feedTab')">Live Feed</button>
+      </div>
+
+      <!-- Vote tab -->
+      <div id="voteTab" class="tabPanel active">
+        <div class="row">
+          <h2 style="margin:0;">🗳️ Next Decision</h2>
+          <span class="pill">Ends in: <strong id="pollEndsIn">—</strong></span>
+        </div>
+
+        <p style="margin-top:10px; font-weight:900;" id="pollQuestion">Pick the next twist:</p>
+        <p class="muted" id="pollDesc">
+          Spend Influence to vote. First 100 Influence is strongest; after that votes diminish.
+          Audience can influence only host-approved options.
+        </p>
+
+        <div id="pollLeader" style="margin-top:10px; display:none;"></div>
+        <div id="pollOptions"></div>
+
+        <div id="liveAlert">Someone did something!</div>
+      </div>
+
+      <!-- Support tab -->
+      <div id="supportTab" class="tabPanel">
+        <div class="row">
+          <h2 style="margin:0;">⚡ Support (earn Influence)</h2>
+          <span class="pill">Total: £<strong id="total">0</strong></span>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Support earns you Influence (vote credits). Real version uses Stripe; this prototype simulates it.
+        </p>
+
+        <div class="statGrid" style="margin-top:10px;">
+          <div class="statCard">
+            <p class="statLabel">Time added</p>
+            <p class="statValue">⏱ <span id="time">0</span>m</p>
+          </div>
+          <div class="statCard">
+            <p class="statLabel">Comfort removed</p>
+            <p class="statValue">🪑 <span id="comfort">0</span></p>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <span class="pill">Quick Support</span>
+          <span class="pill">£1 = <strong>10 Influence</strong></span>
+        </div>
+
+        <div class="row" style="gap:10px; margin-top:10px;">
+          <button class="good" style="width:auto; margin:0;" onclick="supportAction('time', 1)">£1 → +1 minute (+10 Influence)</button>
+          <button class="good" style="width:auto; margin:0;" onclick="supportAction('comfort', 1)">£1 → remove comfort (+10 Influence)</button>
+        </div>
+
+        <div class="row" style="gap:10px; margin-top:10px;">
+          <button class="secondary tabBtn" style="width:auto;" onclick="supportBundle(5)">£5 bundle (+50 Influence)</button>
+          <button class="secondary tabBtn" style="width:auto;" onclick="supportBundle(10)">£10 bundle (+100 Influence)</button>
+        </div>
+
+        <div class="box" style="margin-top:12px; padding:12px; background: rgba(0,0,0,0.25);">
+          <h2 style="margin:0 0 8px 0;">🚀 Milestones</h2>
+          <p class="muted">Hit goals to unlock bigger moments (host-approved only).</p>
+
+          <div style="margin-top:10px;">
+            <p style="margin:0 0 8px 0;"><strong>Hard Mode Unlock</strong> <span class="muted2">£25</span></p>
+            <div class="progress"><div class="bar" id="m1bar"></div></div>
+            <p class="muted2" style="margin-top:8px;" id="m1txt">Locked</p>
+          </div>
+
+          <div style="margin-top:12px;">
+            <p style="margin:0 0 8px 0;"><strong>Boss Round Unlock</strong> <span class="muted2">£60</span></p>
+            <div class="progress"><div class="bar good" id="m2bar"></div></div>
+            <p class="muted2" style="margin-top:8px;" id="m2txt">Locked</p>
+          </div>
         </div>
       </div>
+
+      <!-- Ideas tab -->
+      <div id="ideasTab" class="tabPanel">
+        <div class="row">
+          <h2 style="margin:0;">🧩 Ideas (Bounty Board)</h2>
+          <span class="pill">Host approves</span>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Submit safe ideas. They go to a pending queue until the host approves.
+        </p>
+
+        <textarea id="bountyText" placeholder="Suggest a SAFE idea (e.g., 'sing karaoke 60s', 'hard mode 5 min')"></textarea>
+        <button class="good" onclick="submitBounty()">Submit Idea (cost: 30 Influence)</button>
+
+        <div class="row" style="margin-top:10px;">
+          <span class="pill">✅ Approved</span>
+          <span class="pill">⏳ Pending</span>
+        </div>
+
+        <div class="row" style="gap:12px; align-items:flex-start; margin-top:10px;">
+          <div style="flex:1;">
+            <p style="margin:0; font-weight:900;">Approved ideas</p>
+            <ul class="feed" id="bountyApproved" style="margin-top:10px;">
+              <li class="muted2">None yet.</li>
+            </ul>
+          </div>
+          <div style="flex:1;">
+            <p style="margin:0; font-weight:900;">Pending ideas</p>
+            <ul class="feed" id="bountyPending" style="margin-top:10px;">
+              <li class="muted2">None yet.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="hostIdeasControls" style="display:none; margin-top:10px;">
+          <button class="secondary" onclick="approveLatestBounty()">Approve latest pending idea (Host)</button>
+        </div>
+      </div>
+
+      <!-- Live feed tab -->
+      <div id="feedTab" class="tabPanel">
+        <div class="row">
+          <h2 style="margin:0;">🧾 Live Feed</h2>
+          <span class="pill">Last 10</span>
+        </div>
+        <ul class="feed" id="recentFeed" style="margin-top:10px;">
+          <li class="muted2">No actions yet.</li>
+        </ul>
+      </div>
+
     </div>
 
+    <!-- Discovery card (optional v1) -->
     <div class="box">
       <div class="row">
-        <h2 style="margin:0;">📲 Shorts Feed (TikTok vibe)</h2>
-        <span class="pill">cards (v1)</span>
+        <h2 style="margin:0;">📲 Discovery (Shorts vibe)</h2>
+        <span class="pill">v1 placeholders</span>
       </div>
-
-      <div class="shortsGrid" style="margin-top:10px;">
-        <div class="shortCard">
-          <div class="shortThumb"></div>
-          <div class="shortBody">
-            <p class="shortTitle">🔥 “Comfort Removed” chaos</p>
-            <p class="shortMeta">42s • 12.3k views • 1h ago</p>
-            <div class="badgeRow"><span class="chip">#crowdcontrol</span><span class="chip">#hardmode</span></div>
-          </div>
-        </div>
-        <div class="shortCard">
-          <div class="shortThumb"></div>
-          <div class="shortBody">
-            <p class="shortTitle">😂 “+1 Minute” spam wave</p>
-            <p class="shortMeta">31s • 8.2k views • 2h ago</p>
-            <div class="badgeRow"><span class="chip">#vote</span><span class="chip">#live</span></div>
-          </div>
-        </div>
-        <div class="shortCard">
-          <div class="shortThumb"></div>
-          <div class="shortBody">
-            <p class="shortTitle">🎬 Episode 1 recap (highlights)</p>
-            <p class="shortMeta">6m • 28k views • yesterday</p>
-            <div class="badgeRow"><span class="chip">#arc</span><span class="chip">#story</span></div>
-          </div>
-        </div>
-        <div class="shortCard">
-          <div class="shortThumb"></div>
-          <div class="shortBody">
-            <p class="shortTitle">🗳️ Poll result reveal</p>
-            <p class="shortMeta">1m • 4.7k views • yesterday</p>
-            <div class="badgeRow"><span class="chip">#decision</span><span class="chip">#results</span></div>
-          </div>
-        </div>
-      </div>
-
-      <p class="muted" style="margin-top:10px;">Later: store real clip URLs/metadata in Firebase and render here.</p>
+      <p class="muted" style="margin-top:10px;">
+        Future: render real clips from DB (title, views, url), and open in a modal player.
+      </p>
+      <ul class="feed" style="margin-top:10px;">
+        <li>🔥 “Comfort Removed” chaos <small>42s • 12.3k views</small></li>
+        <li>😂 “+1 Minute” spam wave <small>31s • 8.2k views</small></li>
+        <li>🎬 Episode 1 recap <small>6m • 28k views</small></li>
+      </ul>
     </div>
 
     <div class="box">
       <h2>📜 Safety & Trust</h2>
-      <p><strong>Audience can influence only pre-approved options.</strong> No dangerous/illegal suggestions.</p>
-      <p class="muted">This keeps it fun, fair, and stream-safe.</p>
+      <p style="margin:0;">
+        Audience can influence only pre-approved options. No dangerous, illegal, doxxing, harassment, or self-harm content.
+      </p>
+      <p class="muted2" style="margin-top:10px;">
+        (Billion-pound rule: safety + trust is the product.)
+      </p>
     </div>
+
   </div>
 
-  <!-- RIGHT -->
+  <!-- RIGHT: Profile + Wallet + Host (hidden) -->
   <div id="rightCol">
+
     <div class="box">
       <h2>👤 Profile</h2>
 
       <div id="profileForm">
-        <p class="muted">Choose a display name (saved on your device).</p>
+        <p class="muted">Pick a display name (saved on your device).</p>
         <input id="usernameInput" placeholder="Enter username" maxlength="20" />
         <button onclick="saveProfile()">Save Profile</button>
       </div>
 
       <div id="profileWelcome" style="display:none;">
         <p style="margin:0;">Welcome, <strong><span id="displayName"></span></strong> 👋</p>
-        <div class="row" style="justify-content:flex-start; gap:10px; margin-top:10px;">
-          <span class="pill">Cap/decision: <strong id="capLabel">250</strong></span>
-          <span class="pill">Diminishing: <strong>ON</strong></span>
-        </div>
+        <p class="muted2" style="margin-top:8px;">
+          Your Influence is tied to this name (prototype). Real version uses accounts.
+        </p>
         <button class="secondary" onclick="resetProfile()">Change Name</button>
       </div>
     </div>
 
     <div class="box">
       <div class="row">
-        <h2 style="margin:0;">💠 Influence Wallet</h2>
+        <h2 style="margin:0;">💠 Your Influence</h2>
         <span class="pill">You: <strong id="youName">Anonymous</strong></span>
       </div>
 
       <div class="statGrid" style="margin-top:10px;">
         <div class="statCard">
-          <p class="statLabel">Your coins</p>
+          <p class="statLabel">Influence</p>
           <p class="statValue">💠 <span id="myCoins">0</span></p>
         </div>
         <div class="statCard">
@@ -443,97 +623,37 @@
         </div>
       </div>
 
-      <p class="muted" style="margin-top:10px;">Support actions earn coins. Coins vote (with caps).</p>
+      <div class="row" style="margin-top:10px;">
+        <span class="pill">Cap/decision: <strong id="capLabel">250</strong></span>
+        <span class="pill">Diminishing: <strong>ON</strong></span>
+      </div>
+
+      <p class="muted2" style="margin-top:10px;">
+        Tip: support a little, then vote. Don’t let whales decide everything.
+      </p>
     </div>
 
     <div class="box">
-      <div class="row">
-        <h2 style="margin:0;">🗳️ Decision Point</h2>
-        <span class="pill">Ends in: <strong id="pollEndsIn">—</strong></span>
-      </div>
+      <h2>🔒 Host (prototype)</h2>
+      <p class="muted">Only the host should unlock this.</p>
 
-      <p style="margin-top:8px;"><strong id="pollQuestion">Pick the next twist:</strong></p>
-      <p class="muted" id="pollDesc">Spend coins to vote. First 100 coins strongest; then diminished.</p>
-
-      <div id="pollOptions"></div>
-      <div id="liveAlert">Someone did something!</div>
-    </div>
-
-    <div class="box">
-      <h2>⚡ Crowd Control</h2>
-
-      <div class="statGrid">
-        <div class="statCard">
-          <p class="statLabel">Time added</p>
-          <p class="statValue">⏱ <span id="time">0</span>m</p>
-        </div>
-        <div class="statCard">
-          <p class="statLabel">Comfort removed</p>
-          <p class="statValue">🪑 <span id="comfort">0</span></p>
-        </div>
-      </div>
-
-      <button onclick="supportAction('time', 1)">⚡ Support £1 → +1 minute (earn 10 coins)</button>
-      <button onclick="supportAction('comfort', 1)">😈 Support £1 → remove comfort (earn 10 coins)</button>
-
-      <p class="muted" style="margin-top:10px;">Later: replace with Stripe. On payment success, call supportAction().</p>
-
-      <div id="hostArea" style="display:none; margin-top:10px;">
-        <button class="secondary" onclick="closeDecision()">Close Decision + Announce Winner (Host)</button>
-        <button class="secondary" onclick="resetEvent()">Reset Event (Host)</button>
-        <button class="secondary" onclick="approveLatestBounty()">Approve latest pending bounty (Host)</button>
+      <div id="hostArea" style="display:none;">
+        <button class="secondary" onclick="closeDecision()">Close Decision + Announce Winner</button>
+        <button class="secondary" onclick="resetEvent()">Reset Event</button>
+        <p class="muted2" style="margin-top:10px;">
+          Real version: Firebase Auth + DB rules (never ship a PIN in JS).
+        </p>
       </div>
 
       <div id="hostUnlock" style="margin-top:10px;">
         <input id="hostPin" type="password" placeholder="Host PIN (prototype only)" />
         <button class="secondary" onclick="unlockHost()">Unlock Host</button>
-        <div class="muted">Real app: use Firebase Auth + DB rules (don’t ship a PIN in JS).</div>
+        <p class="muted2" style="margin-top:10px;">
+          Prototype only. Anyone can view-source in production.
+        </p>
       </div>
     </div>
 
-    <div class="box">
-      <div class="row">
-        <h2 style="margin:0;">🚀 Milestones</h2>
-        <span class="pill">Total: £<strong id="total">0</strong></span>
-      </div>
-
-      <p class="muted" style="margin-top:8px;">Hit goals to unlock bigger moments.</p>
-
-      <div style="margin-top:10px;">
-        <p style="margin:0 0 8px 0;"><strong>Hard Mode Unlock</strong> <span class="muted">£25</span></p>
-        <div class="progress"><div class="bar" id="m1bar"></div></div>
-        <p class="muted" style="margin:8px 0 0 0;" id="m1txt">Locked</p>
-      </div>
-
-      <div style="margin-top:12px;">
-        <p style="margin:0 0 8px 0;"><strong>Boss Round Unlock</strong> <span class="muted">£60</span></p>
-        <div class="progress"><div class="bar good" id="m2bar"></div></div>
-        <p class="muted" style="margin:8px 0 0 0;" id="m2txt">Locked</p>
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="row">
-        <h2 style="margin:0;">🧩 Bounty Board (ideas)</h2>
-        <span class="pill">Host approves</span>
-      </div>
-
-      <p class="muted" style="margin-top:8px;">Submit safe ideas. Host approves them for future polls.</p>
-
-      <textarea id="bountyText" placeholder="Suggest a SAFE idea (e.g., 'sing karaoke 60s')"></textarea>
-      <button class="good" onclick="submitBounty()">Submit Idea (cost: 30 coins)</button>
-
-      <ul class="feed" id="bountyFeed" style="margin-top:12px;">
-        <li class="muted">No bounty ideas yet.</li>
-      </ul>
-    </div>
-
-    <div class="box">
-      <h2>🧾 Live Feed</h2>
-      <ul class="feed" id="recentFeed">
-        <li class="muted">No actions yet.</li>
-      </ul>
-    </div>
   </div>
 </div>
 
@@ -541,604 +661,702 @@
   Support is for entertainment only. No outcome/prize is guaranteed by support actions.
 </footer>
 
+<!-- Onboarding Modal -->
+<div class="modalBackdrop" id="onboardBackdrop" role="dialog" aria-modal="true" aria-label="How it works">
+  <div class="modal">
+    <div class="row">
+      <h2 style="margin:0;">How it works</h2>
+      <span class="pill">Safe + host-approved</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <strong>1) Watch the live challenge</strong>
+        <span class="muted">This is the “arc”. People come for the story.</span>
+      </div>
+      <div class="step">
+        <strong>2) Support to earn Influence</strong>
+        <span class="muted">£1 → 10 Influence (prototype simulates payments).</span>
+      </div>
+      <div class="step">
+        <strong>3) Spend Influence to vote</strong>
+        <span class="muted">Caps + diminishing returns stop one person buying the entire outcome.</span>
+      </div>
+      <div class="step">
+        <strong>4) Submit ideas (host approval)</strong>
+        <span class="muted">Ideas go to pending until the host approves them.</span>
+      </div>
+    </div>
+
+    <div class="modalActions">
+      <button class="good" onclick="closeOnboarding(true); selectTab('supportTab'); scrollToId('watchBox');">Start: Support</button>
+      <button class="secondary" onclick="closeOnboarding(true); selectTab('voteTab'); scrollToId('watchBox');">Start: Vote</button>
+      <button class="secondary" onclick="closeOnboarding(true)">Close</button>
+    </div>
+
+    <p class="muted2" style="margin-top:12px;">
+      Pro tip: the billion-pound version is creator tools + moderation + payments + discovery + clips.
+    </p>
+  </div>
+</div>
+
 <script>
-  /***********************
-   * CONFIG (Firebase optional)
-   ***********************/
-  const firebaseConfig = {
-    apiKey: "PASTE_HERE",
-    authDomain: "PASTE_HERE",
-    databaseURL: "PASTE_HERE",
-    projectId: "PASTE_HERE",
-    storageBucket: "PASTE_HERE",
-    messagingSenderId: "PASTE_HERE",
-    appId: "PASTE_HERE"
-  };
+/* =========================================================
+   CHALLENGEVERSE (v1)
+   - Mobile-first “one flow”: Watch → Vote/Support/Ideas/Feed tabs
+   - Onboarding modal for clarity
+   - Poll bars + leading indicator
+   - Approved vs Pending ideas
+   - Host-only controls hidden for viewers
+   - Firebase optional; safe fallback to Local if blocked/slow
+   ========================================================= */
 
-  /***********************
-   * ECONOMY / RULES
-   ***********************/
-  const COINS_PER_POUND = 10;
-  const CAP_PER_DECISION = 250;
-  const DIMINISH_THRESHOLD = 100;
-  const VOTE_COST = 25;
-  const BOUNTY_COST = 30;
+/***********************
+ * CONFIG (Firebase optional)
+ ***********************/
+const firebaseConfig = {
+  apiKey: "PASTE_HERE",
+  authDomain: "PASTE_HERE",
+  databaseURL: "PASTE_HERE",
+  projectId: "PASTE_HERE",
+  storageBucket: "PASTE_HERE",
+  messagingSenderId: "PASTE_HERE",
+  appId: "PASTE_HERE"
+};
 
-  function votePower(coinSpend){
-    const a = Math.min(coinSpend, DIMINISH_THRESHOLD);
-    const b = Math.max(0, coinSpend - DIMINISH_THRESHOLD);
-    return a + Math.floor(b * 0.4);
-  }
+/***********************
+ * ECONOMY / RULES
+ ***********************/
+const INFLUENCE_PER_POUND = 10;   // £1 => 10 influence
+const CAP_PER_DECISION = 250;     // max influence spent per decision per user
+const DIMINISH_THRESHOLD = 100;   // first 100 strongest
+const VOTE_COST = 25;
+const BOUNTY_COST = 30;
 
-  /***********************
-   * HOST (prototype)
-   ***********************/
-  const HOST_PIN = "7391"; // change
-  function isHost(){ return localStorage.getItem("cv_host") === "yes"; }
+document.getElementById("capLabel").innerText = CAP_PER_DECISION;
 
-  function unlockHost(){
-    const pin = (document.getElementById("hostPin").value || "").trim();
-    if(pin === HOST_PIN){
-      localStorage.setItem("cv_host", "yes");
-      updateHostUI();
-      alert("Host unlocked ✅");
-    } else alert("Wrong PIN ❌");
-  }
-  function updateHostUI(){
-    document.getElementById("hostArea").style.display = isHost() ? "block" : "none";
-    document.getElementById("hostUnlock").style.display = isHost() ? "none" : "block";
-  }
+function votePower(influenceSpend){
+  const a = Math.min(influenceSpend, DIMINISH_THRESHOLD);
+  const b = Math.max(0, influenceSpend - DIMINISH_THRESHOLD);
+  return a + Math.floor(b * 0.4);
+}
 
-  /***********************
-   * PROFILE
-   ***********************/
-  function getUserName(){ return localStorage.getItem("cv_username") || "Anonymous"; }
+/***********************
+ * HOST (prototype)
+ ***********************/
+const HOST_PIN = "7391"; // CHANGE ME (prototype only)
+function isHost(){ return localStorage.getItem("cv_host") === "yes"; }
 
-  function loadProfile(){
-    const name = localStorage.getItem("cv_username");
-    if(name){
-      document.getElementById("profileForm").style.display = "none";
-      document.getElementById("profileWelcome").style.display = "block";
-      document.getElementById("displayName").innerText = name;
-      document.getElementById("youName").innerText = name;
-    } else {
-      document.getElementById("youName").innerText = "Anonymous";
-    }
-  }
-  function saveProfile(){
-    const raw = (document.getElementById("usernameInput").value || "").trim();
-    if(raw.length < 2){ alert("Please enter at least 2 characters."); return; }
-    const safe = raw.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
-    localStorage.setItem("cv_username", safe);
-    loadProfile();
-    renderCoins();
-  }
-  function resetProfile(){
-    localStorage.removeItem("cv_username");
-    localStorage.removeItem("cv_host");
-    location.reload();
-  }
+function unlockHost(){
+  const pin = (document.getElementById("hostPin").value || "").trim();
+  if(pin === HOST_PIN){
+    localStorage.setItem("cv_host", "yes");
+    updateHostUI();
+    alert("Host unlocked ✅");
+  } else alert("Wrong PIN ❌");
+}
 
-  /***********************
-   * STREAM CONFIG (local)
-   ***********************/
-  function toggleStreamConfig(){
-    const el = document.getElementById("streamConfig");
-    el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
-  }
-  function saveStream(){
-    const provider = document.getElementById("streamProvider").value;
-    const url = (document.getElementById("streamUrl").value || "").trim();
-    if(!url) return alert("Paste an embed URL.");
-    localStorage.setItem("cv_stream_provider", provider);
-    localStorage.setItem("cv_stream_url", url);
-    renderStream();
-    document.getElementById("streamConfig").style.display = "none";
-  }
-  function escapeHtml(s){
-    return String(s).replace(/"/g, "&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  }
-  function renderStream(){
-    const provider = localStorage.getItem("cv_stream_provider");
-    const url = localStorage.getItem("cv_stream_url");
-    const label = document.getElementById("streamSourceLabel");
-    const frame = document.getElementById("videoFrame");
-    if(!provider || !url){
-      label.innerText = "Placeholder";
-      frame.innerHTML = `
-        <div style="text-align:center; max-width: 520px;">
-          <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
-          <p class="muted" style="margin:8px 0 0 0;">Add a YouTube/Twitch embed in “Set Stream”.</p>
-        </div>`;
-      return;
-    }
-    label.innerText = provider === "youtube" ? "YouTube" : "Twitch";
-    frame.innerHTML = `<iframe src="${escapeHtml(url)}" allowfullscreen></iframe>`;
-  }
+function updateHostUI(){
+  const host = isHost();
+  document.getElementById("hostArea").style.display = host ? "block" : "none";
+  document.getElementById("hostUnlock").style.display = host ? "none" : "block";
 
-  /***********************
-   * UI HELPERS
-   ***********************/
-  function setAlert(text){
-    const el = document.getElementById("liveAlert");
-    el.innerText = text;
-    el.style.display = "block";
-    clearTimeout(window.__alertTimer);
-    window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
-  }
-  function fmtMs(ms){
-    const s = Math.max(0, Math.floor(ms/1000));
-    const m = Math.floor(s/60);
-    const r = s % 60;
-    return `${m}m ${String(r).padStart(2,"0")}s`;
-  }
+  // Host-only UI in watch area
+  document.getElementById("setStreamBtn").style.display = host ? "inline-flex" : "none";
+  document.getElementById("hostIdeasControls").style.display = host ? "block" : "none";
+}
 
-  /***********************
-   * LOCAL DEFAULT STATE
-   ***********************/
-  let local = {
-    totals: { total:0, supports:0, time:0, comfort:0 },
-    feed: [],
-    coins: {},
-    decision: {
-      endsAt: Date.now() + 15*60*1000,
-      closed: false,
-      question: "Pick the next twist:",
-      desc: "Spend coins to vote. First 100 coins strongest; then diminished.",
-      options: {
-        a: { name:"Ice water face splash (safe)", votes: 0 },
-        b: { name:"Hard Mode for 5 minutes", votes: 0 },
-        c: { name:"No sitting for 10 minutes", votes: 0 }
-      },
-      usedBy: {}
-    },
-    bounties: []
-  };
+/***********************
+ * PROFILE (local)
+ ***********************/
+function getUserName(){ return localStorage.getItem("cv_username") || "Anonymous"; }
 
-  /***********************
-   * FIREBASE (optional)
-   ***********************/
-  let localMode = true;
-  let refs = null;
-  let live = { totals:null, coinsObj:{}, decision:null, bounties:[] };
-
-  function isFirebaseConfigured(){
-    return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_HERE";
-  }
-  function setModeLabel(){
-    document.getElementById("modeLabel").innerText = localMode ? "Local" : "Global";
-  }
-
-  async function initData(){
-    localMode = true;
-    setModeLabel();
-
-    if(!isFirebaseConfigured()){
-      console.log("LOCAL MODE: paste Firebase config to go global.");
-      renderAllFromLocal();
-      return;
-    }
-
-    const CONNECT_TIMEOUT_MS = 2200;
-    try{ firebase.initializeApp(firebaseConfig); } catch(e){ /* already init */ }
-
-    const db = firebase.database();
-    refs = {
-      totals: db.ref("challengeHub/totals"),
-      feed: db.ref("challengeHub/feed"),
-      coins: db.ref("challengeHub/coins"),
-      decision: db.ref("challengeHub/decision"),
-      bounties: db.ref("challengeHub/bounties")
-    };
-
-    const connectPromise = new Promise((resolve, reject) => {
-      refs.totals.once("value").then(()=> resolve(true)).catch(reject);
-    });
-    const timeoutPromise = new Promise(resolve => setTimeout(()=> resolve(false), CONNECT_TIMEOUT_MS));
-
-    let ok = false;
-    try{ ok = await Promise.race([connectPromise, timeoutPromise]); } catch(e){ ok = false; }
-
-    if(!ok){
-      console.log("Firebase blocked/slow -> staying LOCAL.");
-      localMode = true;
-      setModeLabel();
-      renderAllFromLocal();
-      return;
-    }
-
-    localMode = false;
-    setModeLabel();
-
-    // seed
-    refs.totals.get().then(s => { if(!s.exists()) refs.totals.set(local.totals); });
-    refs.decision.get().then(s => { if(!s.exists()) refs.decision.set(local.decision); });
-
-    // listeners
-    refs.totals.on("value", snap => {
-      live.totals = snap.val() || local.totals;
-      renderTotals(live.totals);
-    });
-
-    refs.feed.limitToLast(10).on("value", snap => {
-      const obj = snap.val() || {};
-      const items = Object.values(obj).sort((a,b)=> (b.ts||0)-(a.ts||0));
-      renderFeed(items);
-    });
-
-    refs.coins.on("value", snap => {
-      live.coinsObj = snap.val() || {};
-      renderCoins();
-    });
-
-    refs.decision.on("value", snap => {
-      live.decision = snap.val() || local.decision;
-      renderDecision(live.decision);
-      tickCountdown();
-    });
-
-    refs.bounties.limitToLast(12).on("value", snap => {
-      const obj = snap.val() || {};
-      const items = Object.entries(obj).map(([id,v]) => ({ id, ...v }))
-        .sort((a,b)=> (b.ts||0)-(a.ts||0));
-      live.bounties = items;
-      renderBounties(items);
-    });
-  }
-
-  /***********************
-   * RENDER
-   ***********************/
-  function renderTotals(t){
-    document.getElementById("total").innerText = (t.total||0);
-    document.getElementById("time").innerText = (t.time||0);
-    document.getElementById("comfort").innerText = (t.comfort||0);
-    updateMilestones(t.total||0);
-  }
-  function renderFeed(items){
-    const ul = document.getElementById("recentFeed");
-    ul.innerHTML = "";
-    if(!items || items.length === 0){
-      ul.innerHTML = `<li class="muted">No actions yet.</li>`;
-      return;
-    }
-    items.slice(0, 10).forEach(it=>{
-      const li=document.createElement("li");
-      li.innerText = it.msg;
-      ul.appendChild(li);
-    });
-  }
-  function renderBounties(items){
-    const ul = document.getElementById("bountyFeed");
-    ul.innerHTML = "";
-    if(!items || items.length === 0){
-      ul.innerHTML = `<li class="muted">No bounty ideas yet.</li>`;
-      return;
-    }
-    items.slice(0, 10).forEach(it=>{
-      const li=document.createElement("li");
-      const tag = it.status === "approved" ? "✅ Approved" : "⏳ Pending";
-      li.innerText = `${tag} — ${it.text} (by ${it.by})`;
-      ul.appendChild(li);
-    });
-  }
-  function renderCoins(){
-    const name = getUserName();
+function loadProfile(){
+  const name = localStorage.getItem("cv_username");
+  if(name){
+    document.getElementById("profileForm").style.display = "none";
+    document.getElementById("profileWelcome").style.display = "block";
+    document.getElementById("displayName").innerText = name;
     document.getElementById("youName").innerText = name;
-    document.getElementById("myCoins").innerText = getMyCoins();
-    document.getElementById("myUsed").innerText = getMyUsedThisDecision();
+  } else {
+    document.getElementById("youName").innerText = "Anonymous";
   }
-  function renderDecision(dec){
-    document.getElementById("pollQuestion").innerText = dec.question || "Pick the next twist:";
-    document.getElementById("pollDesc").innerText = dec.desc || "";
-    const container = document.getElementById("pollOptions");
-    container.innerHTML = "";
+}
 
-    Object.entries(dec.options||{}).forEach(([key,opt])=>{
-      const div = document.createElement("div");
-      div.className="pollOpt";
-
-      const left = document.createElement("div");
-      left.className="pollLeft";
-      left.innerHTML = `<p class="pollName">${opt.name||key}</p><p class="pollMeta">Votes: ${opt.votes||0}${dec.closed?" • closed":""}</p>`;
-
-      const btn = document.createElement("button");
-      btn.className="pollBtn secondary";
-      btn.innerText = dec.closed ? "Closed" : `Vote (${VOTE_COST} coins)`;
-      btn.disabled = !!dec.closed;
-      btn.onclick = () => voteOption(key, VOTE_COST);
-
-      div.appendChild(left);
-      div.appendChild(btn);
-      container.appendChild(div);
-    });
-  }
-  function renderAllFromLocal(){
-    renderTotals(local.totals);
-    renderFeed(local.feed);
-    renderBounties(local.bounties);
-    renderDecision(local.decision);
-    renderCoins();
-    tickCountdown();
-  }
-
-  function updateMilestones(total){
-    const m1=25, m2=60;
-    document.getElementById("m1bar").style.width = Math.min(100, Math.floor((total/m1)*100)) + "%";
-    document.getElementById("m2bar").style.width = Math.min(100, Math.floor((total/m2)*100)) + "%";
-    document.getElementById("m1txt").innerText = total >= m1 ? "✅ Unlocked: Hard Mode available" : "Locked";
-    document.getElementById("m2txt").innerText = total >= m2 ? "✅ Unlocked: Boss Round available" : "Locked";
-  }
-
-  /***********************
-   * COUNTDOWN
-   ***********************/
-  function getDecision(){
-    return localMode ? local.decision : (live.decision || local.decision);
-  }
-  function tickCountdown(){
-    const dec = getDecision();
-    const endsIn = (dec.endsAt||0) - Date.now();
-    const text = dec.closed ? "Closed" : fmtMs(endsIn);
-    document.getElementById("pollEndsIn").innerText = text;
-    document.getElementById("decisionCountdown").innerText = text;
-
-    if(localMode && !dec.closed && endsIn <= 0){
-      local.decision.closed = true;
-      renderDecision(local.decision);
-      announceWinner(local.decision);
-      setAlert("🧾 Decision closed (time ended)");
-    }
-  }
-  setInterval(tickCountdown, 1000);
-
-  /***********************
-   * COINS
-   ***********************/
-  function getMyCoins(){
-    const name = getUserName();
-    if(localMode) return local.coins[name] || 0;
-    return (live.coinsObj && live.coinsObj[name]) ? live.coinsObj[name] : 0;
-  }
-  function setMyCoins(val){
-    const name = getUserName();
-    val = Math.max(0, (val|0));
-    if(localMode){
-      local.coins[name] = val;
-      renderCoins();
-      return;
-    }
-    refs.coins.child(name).set(val);
-  }
-  function addMyCoins(delta){
-    const name = getUserName();
-    delta = (delta|0);
-    if(localMode){
-      local.coins[name] = (local.coins[name]||0) + delta;
-      renderCoins();
-      return;
-    }
-    refs.coins.child(name).transaction(cur => (cur||0) + delta);
-  }
-  function getMyUsedThisDecision(){
-    const name = getUserName();
-    const dec = getDecision();
-    return (dec.usedBy && dec.usedBy[name]) ? (dec.usedBy[name]|0) : 0;
-  }
-
-  /***********************
-   * FEED LOGGING
-   ***********************/
-  function logAction(msg){
-    setAlert(msg);
-    if(localMode){
-      local.feed.unshift({ msg, ts: Date.now() });
-      local.feed = local.feed.slice(0, 12);
-      renderFeed(local.feed);
-      return;
-    }
-    refs.feed.push({ msg, ts: Date.now() });
-  }
-
-  /***********************
-   * SUPPORT ACTIONS
-   ***********************/
-  function supportAction(type, pounds){
-    const name = getUserName();
-    if(name === "Anonymous") return alert("Set a display name first.");
-
-    const coins = pounds * COINS_PER_POUND;
-    const msg = type === "time"
-      ? `⚡ ${name} supported £${pounds} → +${pounds} minute (+${coins} coins)`
-      : `😈 ${name} supported £${pounds} → comfort removed (+${coins} coins)`;
-
-    if(localMode){
-      local.totals.total += pounds;
-      local.totals.supports += 1;
-      if(type === "time") local.totals.time += pounds;
-      if(type === "comfort") local.totals.comfort += 1;
-      renderTotals(local.totals);
-      addMyCoins(coins);
-      logAction(msg);
-      return;
-    }
-
-    refs.totals.child("total").transaction(cur => (cur||0) + pounds);
-    refs.totals.child("supports").transaction(cur => (cur||0) + 1);
-    if(type === "time") refs.totals.child("time").transaction(cur => (cur||0) + pounds);
-    if(type === "comfort") refs.totals.child("comfort").transaction(cur => (cur||0) + 1);
-
-    addMyCoins(coins);
-    logAction(msg);
-  }
-
-  /***********************
-   * VOTING
-   ***********************/
-  function voteOption(optionKey, coinSpend){
-    const name = getUserName();
-    if(name === "Anonymous") return alert("Set a display name first.");
-
-    const dec = getDecision();
-    if(!dec || dec.closed) return alert("Decision is closed.");
-
-    const myCoins = getMyCoins();
-    if(myCoins < coinSpend) return alert("Not enough coins. Support actions to earn coins.");
-
-    const used = getMyUsedThisDecision();
-    if(used + coinSpend > CAP_PER_DECISION) return alert(`Cap reached. Max ${CAP_PER_DECISION} coins per decision.`);
-
-    const gainedVotes = votePower(coinSpend);
-    const optName = (dec.options && dec.options[optionKey] && dec.options[optionKey].name) ? dec.options[optionKey].name : optionKey;
-    const announce = `🗳️ ${name} voted ${coinSpend} coins on "${optName}" (+${gainedVotes} power)`;
-
-    if(localMode){
-      setMyCoins(myCoins - coinSpend);
-      dec.usedBy[name] = (dec.usedBy[name]||0) + coinSpend;
-      dec.options[optionKey].votes = (dec.options[optionKey].votes||0) + gainedVotes;
-      renderDecision(dec);
-      renderCoins();
-      logAction(announce);
-      return;
-    }
-
-    refs.coins.child(name).transaction(cur => {
-      cur = cur || 0;
-      if(cur < coinSpend) return;
-      return cur - coinSpend;
-    });
-    refs.decision.child("usedBy").child(name).transaction(cur => (cur||0) + coinSpend);
-    refs.decision.child("options").child(optionKey).child("votes").transaction(cur => (cur||0) + gainedVotes);
-
-    logAction(announce);
-  }
-
-  function announceWinner(dec){
-    const entries = Object.entries(dec.options||{}).sort((a,b)=> (b[1].votes||0)-(a[1].votes||0));
-    const top = entries[0];
-    if(!top) return logAction("🧾 Decision closed — no votes.");
-    logAction(`🏁 Decision result: "${top[1].name}" wins with ${top[1].votes||0} votes`);
-  }
-
-  /***********************
-   * BOUNTIES
-   ***********************/
-  function sanitizeIdea(text){
-    return (text||"").replace(/[^\w\s.,!?'"()-]/g, "").trim().slice(0, 180);
-  }
-  function submitBounty(){
-    const name = getUserName();
-    if(name === "Anonymous") return alert("Set a display name first.");
-
-    const idea = sanitizeIdea(document.getElementById("bountyText").value || "");
-    if(idea.length < 8) return alert("Write a clearer idea (at least 8 characters).");
-
-    const coins = getMyCoins();
-    if(coins < BOUNTY_COST) return alert("Not enough coins.");
-
-    setMyCoins(coins - BOUNTY_COST);
-    document.getElementById("bountyText").value = "";
-
-        const bounty = { text: idea, by: name, ts: Date.now(), status: "pending" };
-
-    if(localMode){
-      local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
-      local.bounties = local.bounties.slice(0, 20);
-      renderBounties(local.bounties);
-      logAction(`🧩 ${name} submitted a bounty idea (pending)`);
-      return;
-    }
-
-    refs.bounties.push(bounty);
-    logAction(`🧩 ${name} submitted a bounty idea (pending)`);
-  }
-
-  function approveLatestBounty(){
-    if(!isHost()) return alert("Host only.");
-
-    if(localMode){
-      const item = local.bounties.find(b => b.status === "pending");
-      if(!item) return alert("No pending bounties.");
-      item.status = "approved";
-      renderBounties(local.bounties);
-      logAction(`✅ Host approved a bounty: "${item.text}"`);
-      return;
-    }
-
-    const pending = (live.bounties || []).find(b => b.status === "pending");
-    if(!pending) return alert("No pending bounties.");
-    refs.bounties.child(pending.id).child("status").set("approved");
-    logAction(`✅ Host approved a bounty: "${pending.text}"`);
-  }
-
-  /***********************
-   * HOST ACTIONS
-   ***********************/
-  function closeDecision(){
-    if(!isHost()) return alert("Host only.");
-
-    if(localMode){
-      local.decision.closed = true;
-      renderDecision(local.decision);
-      announceWinner(local.decision);
-      return;
-    }
-
-    refs.decision.child("closed").set(true);
-  }
-
-  function resetEvent(){
-    if(!isHost()) return alert("Host only.");
-    const msg = "🔁 Host reset the event";
-
-    if(localMode){
-      local.totals = { total:0, supports:0, time:0, comfort:0 };
-      local.feed = [];
-      local.decision.closed = false;
-      local.decision.endsAt = Date.now() + 15*60*1000;
-      local.decision.usedBy = {};
-      Object.values(local.decision.options).forEach(o => o.votes = 0);
-      local.bounties = [];
-      renderAllFromLocal();
-      logAction(msg);
-      return;
-    }
-
-    refs.totals.set({ total:0, supports:0, time:0, comfort:0 });
-    refs.feed.remove();
-    refs.bounties.remove();
-    refs.decision.update({
-      closed: false,
-      endsAt: Date.now() + 15*60*1000,
-      usedBy: null
-    });
-
-    refs.decision.child("options").get().then(snap=>{
-      const obj = snap.val() || {};
-      Object.keys(obj).forEach(k=>{
-        refs.decision.child("options").child(k).child("votes").set(0);
-      });
-    });
-
-    logAction(msg);
-  }
-
-  /***********************
-   * BOOT
-   ***********************/
-  document.getElementById("capLabel").innerText = CAP_PER_DECISION;
-
+function saveProfile(){
+  const raw = (document.getElementById("usernameInput").value || "").trim();
+  if(raw.length < 2){ alert("Please enter at least 2 characters."); return; }
+  const safe = raw.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
+  localStorage.setItem("cv_username", safe);
   loadProfile();
-  updateHostUI();
-  renderStream();
-  renderAllFromLocal();
+  renderCoins();
+}
 
-  initData().catch(err=>{
-    console.log("Init error:", err);
+function resetProfile(){
+  localStorage.removeItem("cv_username");
+  localStorage.removeItem("cv_host");
+  location.reload();
+}
+
+/***********************
+ * STREAM CONFIG (host only)
+ ***********************/
+function toggleStreamConfig(){
+  if(!isHost()) return;
+  const el = document.getElementById("streamConfig");
+  el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
+}
+function saveStream(){
+  if(!isHost()) return;
+  const provider = document.getElementById("streamProvider").value;
+  const url = (document.getElementById("streamUrl").value || "").trim();
+  if(!url) return alert("Paste an embed URL.");
+  localStorage.setItem("cv_stream_provider", provider);
+  localStorage.setItem("cv_stream_url", url);
+  renderStream();
+  document.getElementById("streamConfig").style.display = "none";
+}
+function escapeHtml(s){
+  return String(s).replace(/"/g, "&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function renderStream(){
+  const provider = localStorage.getItem("cv_stream_provider");
+  const url = localStorage.getItem("cv_stream_url");
+  const label = document.getElementById("streamSourceLabel");
+  const frame = document.getElementById("videoFrame");
+
+  if(!provider || !url){
+    label.innerText = "Placeholder";
+    frame.innerHTML = `
+      <div style="text-align:center; max-width: 520px;">
+        <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
+        <p class="muted" style="margin-top:8px;">Host can set a YouTube/Twitch embed (hidden for viewers).</p>
+      </div>`;
+    return;
+  }
+
+  label.innerText = provider === "youtube" ? "YouTube" : "Twitch";
+  frame.innerHTML = `<iframe src="${escapeHtml(url)}" allowfullscreen></iframe>`;
+}
+
+/***********************
+ * TABS
+ ***********************/
+function selectTab(tabId){
+  document.querySelectorAll(".tabBtn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.tab === tabId);
+  });
+  document.querySelectorAll(".tabPanel").forEach(p=>{
+    p.classList.toggle("active", p.id === tabId);
+  });
+}
+
+/***********************
+ * ONBOARDING
+ ***********************/
+function openOnboarding(force){
+  const seen = localStorage.getItem("cv_onboarded") === "yes";
+  if(!force && seen) return;
+  document.getElementById("onboardBackdrop").style.display = "flex";
+}
+function closeOnboarding(markSeen){
+  document.getElementById("onboardBackdrop").style.display = "none";
+  if(markSeen) localStorage.setItem("cv_onboarded", "yes");
+}
+document.getElementById("onboardBackdrop").addEventListener("click", (e)=>{
+  if(e.target.id === "onboardBackdrop") closeOnboarding(true);
+});
+function scrollToId(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+/***********************
+ * UI HELPERS
+ ***********************/
+function setAlert(text){
+  const el = document.getElementById("liveAlert");
+  el.innerText = text;
+  el.style.display = "block";
+  clearTimeout(window.__alertTimer);
+  window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
+}
+function fmtMs(ms){
+  const s = Math.max(0, Math.floor(ms/1000));
+  const m = Math.floor(s/60);
+  const r = s % 60;
+  return `${m}m ${String(r).padStart(2,"0")}s`;
+}
+
+/***********************
+ * LOCAL DEFAULT STATE
+ ***********************/
+let local = {
+  arc: {
+    title: "ChallengeVerse — “Last To Leave” (Season 1)",
+    subtitle: "Watch live. Earn Influence. Decide the next twist (safe + host-approved)."
+  },
+  totals: { total:0, supports:0, time:0, comfort:0 },
+  feed: [],
+  coins: {},
+  decision: {
+    endsAt: Date.now() + 15*60*1000,
+    closed: false,
+    question: "Pick the next twist:",
+    desc: "Spend Influence to vote. First 100 Influence is strongest; after that votes diminish.",
+    options: {
+      a: { name:"Ice water face splash (safe)", votes: 0 },
+      b: { name:"Hard Mode for 5 minutes", votes: 0 },
+      c: { name:"No sitting for 10 minutes", votes: 0 }
+    },
+    usedBy: {}
+  },
+  bounties: []
+};
+
+/***********************
+ * FIREBASE (optional)
+ ***********************/
+let localMode = true;
+let refs = null;
+let live = { arc:null, totals:null, coinsObj:{}, decision:null, bounties:[] };
+
+function isFirebaseConfigured(){
+  return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_HERE";
+}
+function setModeLabel(){
+  document.getElementById("modeLabel").innerText = localMode ? "Local" : "Global";
+}
+
+async function initData(){
+  localMode = true;
+  setModeLabel();
+
+  if(!isFirebaseConfigured()){
+    console.log("LOCAL MODE: paste Firebase config to go global.");
+    renderAllFromLocal();
+    return;
+  }
+
+  const CONNECT_TIMEOUT_MS = 2200;
+  try{ firebase.initializeApp(firebaseConfig); } catch(e){ /* already init */ }
+
+  const db = firebase.database();
+  refs = {
+    arc: db.ref("challengeHub/arc"),
+    totals: db.ref("challengeHub/totals"),
+    feed: db.ref("challengeHub/feed"),
+    coins: db.ref("challengeHub/coins"),
+    decision: db.ref("challengeHub/decision"),
+    bounties: db.ref("challengeHub/bounties")
+  };
+
+  const connectPromise = new Promise((resolve, reject) => {
+    refs.totals.once("value").then(()=> resolve(true)).catch(reject);
+  });
+  const timeoutPromise = new Promise(resolve => setTimeout(()=> resolve(false), CONNECT_TIMEOUT_MS));
+
+  let ok = false;
+  try{ ok = await Promise.race([connectPromise, timeoutPromise]); } catch(e){ ok = false; }
+
+  if(!ok){
+    console.log("Firebase blocked/slow -> staying LOCAL.");
     localMode = true;
     setModeLabel();
     renderAllFromLocal();
+    return;
+  }
+
+  localMode = false;
+  setModeLabel();
+
+  // Seed defaults
+  refs.arc.get().then(s => { if(!s.exists()) refs.arc.set(local.arc); });
+  refs.totals.get().then(s => { if(!s.exists()) refs.totals.set(local.totals); });
+  refs.decision.get().then(s => { if(!s.exists()) refs.decision.set(local.decision); });
+
+  // Listeners
+  refs.arc.on("value", snap => {
+    const a = snap.val() || local.arc;
+    document.getElementById("arcTitle").innerText = a.title || local.arc.title;
+    document.getElementById("arcSubtitle").innerText = a.subtitle || local.arc.subtitle;
   });
+
+  refs.totals.on("value", snap => {
+    live.totals = snap.val() || local.totals;
+    renderTotals(live.totals);
+  });
+
+  refs.feed.limitToLast(10).on("value", snap => {
+    const obj = snap.val() || {};
+    const items = Object.values(obj).sort((a,b)=> (b.ts||0)-(a.ts||0));
+    renderFeed(items);
+  });
+
+  refs.coins.on("value", snap => {
+    live.coinsObj = snap.val() || {};
+    renderCoins();
+  });
+
+  refs.decision.on("value", snap => {
+    live.decision = snap.val() || local.decision;
+    renderDecision(live.decision);
+    tickCountdown();
+    if(live.decision.closed && !window.__announcedWinner){
+      window.__announcedWinner = true;
+      announceWinner(live.decision);
+    }
+    if(!live.decision.closed) window.__announcedWinner = false;
+  });
+
+  refs.bounties.limitToLast(40).on("value", snap => {
+    const obj = snap.val() || {};
+    const items = Object.entries(obj).map(([id,v]) => ({ id, ...v }))
+      .sort((a,b)=> (b.ts||0)-(a.ts||0));
+    live.bounties = items;
+    renderBounties(items);
+  });
+}
+
+/***********************
+ * RENDER
+ ***********************/
+function renderTotals(t){
+  document.getElementById("total").innerText = (t.total||0);
+  document.getElementById("time").innerText = (t.time||0);
+  document.getElementById("comfort").innerText = (t.comfort||0);
+  updateMilestones(t.total||0);
+}
+
+function renderFeed(items){
+  const ul = document.getElementById("recentFeed");
+  ul.innerHTML = "";
+  if(!items || items.length === 0){
+    ul.innerHTML = `<li class="muted2">No actions yet.</li>`;
+    return;
+  }
+  items.slice(0, 10).forEach(it=>{
+    const li=document.createElement("li");
+    li.innerText = it.msg;
+    ul.appendChild(li);
+  });
+}
+
+function renderBounties(items){
+  const approved = (items||[]).filter(x => x.status === "approved");
+  const pending  = (items||[]).filter(x => x.status !== "approved");
+
+  const ulA = document.getElementById("bountyApproved");
+  const ulP = document.getElementById("bountyPending");
+  ulA.innerHTML = "";
+  ulP.innerHTML = "";
+
+  if(approved.length === 0) ulA.innerHTML = `<li class="muted2">None yet.</li>`;
+  if(pending.length === 0) ulP.innerHTML = `<li class="muted2">None yet.</li>`;
+
+  approved.slice(0, 8).forEach(it=>{
+    const li=document.createElement("li");
+    li.innerText = `✅ ${it.text}`;
+    const sm = document.createElement("small");
+    sm.innerText = `by ${it.by}`;
+    li.appendChild(sm);
+    ulA.appendChild(li);
+  });
+
+  pending.slice(0, 8).forEach(it=>{
+    const li=document.createElement("li");
+    li.innerText = `⏳ ${it.text}`;
+    const sm = document.createElement("small");
+    sm.innerText = `by ${it.by}`;
+    li.appendChild(sm);
+    ulP.appendChild(li);
+  });
+}
+
+function renderCoins(){
+  const name = getUserName();
+  document.getElementById("youName").innerText = name;
+  document.getElementById("myCoins").innerText = getMyCoins();
+  document.getElementById("myUsed").innerText = getMyUsedThisDecision();
+}
+
+function renderDecision(dec){
+  document.getElementById("pollQuestion").innerText = dec.question || "Pick the next twist:";
+  document.getElementById("pollDesc").innerText = dec.desc || "";
+
+  const container = document.getElementById("pollOptions");
+  container.innerHTML = "";
+
+  const options = dec.options || {};
+  const totalVotes = Object.values(options).reduce((s,o)=> s + (o.votes||0), 0);
+
+  // find leader
+  let leaderKey=null, leaderVotes=-1;
+  Object.entries(options).forEach(([k,o])=>{
+    const v=o.votes||0;
+    if(v > leaderVotes){ leaderVotes=v; leaderKey=k; }
+  });
+
+  const leaderEl = document.getElementById("pollLeader");
+  if(leaderKey && leaderVotes > 0){
+    leaderEl.style.display = "block";
+    leaderEl.innerHTML = `<span class="leading">🔥 Leading: ${options[leaderKey].name} (${leaderVotes})</span>`;
+  } else {
+    leaderEl.style.display = "none";
+    leaderEl.innerHTML = "";
+  }
+
+  Object.entries(options).forEach(([key,opt])=>{
+    const v = opt.votes || 0;
+    const pct = totalVotes > 0 ? Math.round((v/totalVotes)*100) : 0;
+
+    const wrap = document.createElement("div");
+    wrap.className="pollOpt";
+
+    const head = document.createElement("div");
+    head.className="pollHead";
+
+    const left = document.createElement("div");
+    left.style.minWidth = "0";
+    left.innerHTML = `
+      <p class="pollName">${opt.name || key}</p>
+      <p class="pollMeta">
+        ${dec.closed ? "Closed • " : ""}Votes: ${v} • ${pct}%
+        ${key === leaderKey && v > 0 ? " • 🔥 leading" : ""}
+      </p>
+    `;
+
+    const btn = document.createElement("button");
+    btn.className="secondary tabBtn";
+    btn.innerText = dec.closed ? "Closed" : `Vote (${VOTE_COST})`;
+    btn.disabled = !!dec.closed;
+    btn.onclick = () => voteOption(key, VOTE_COST);
+
+    head.appendChild(left);
+    head.appendChild(btn);
+
+    const barWrap = document.createElement("div");
+    barWrap.className="pollBarWrap";
+
+    const bar = document.createElement("div");
+    bar.className="pollBar";
+    bar.style.width = pct + "%";
+
+    barWrap.appendChild(bar);
+
+    wrap.appendChild(head);
+    wrap.appendChild(barWrap);
+    container.appendChild(wrap);
+  });
+}
+
+function renderAllFromLocal(){
+  document.getElementById("arcTitle").innerText = local.arc.title;
+  document.getElementById("arcSubtitle").innerText = local.arc.subtitle;
+  renderTotals(local.totals);
+  renderFeed(local.feed);
+  renderBounties(local.bounties);
+  renderDecision(local.decision);
+  renderCoins();
+  tickCountdown();
+}
+
+function updateMilestones(total){
+  const m1=25, m2=60;
+  document.getElementById("m1bar").style.width = Math.min(100, Math.floor((total/m1)*100)) + "%";
+  document.getElementById("m2bar").style.width = Math.min(100, Math.floor((total/m2)*100)) + "%";
+  document.getElementById("m1txt").innerText = total >= m1 ? "✅ Unlocked: Hard Mode available" : "Locked";
+  document.getElementById("m2txt").innerText = total >= m2 ? "✅ Unlocked: Boss Round available" : "Locked";
+}
+
+/***********************
+ * COUNTDOWN
+ ***********************/
+function getDecision(){
+  return localMode ? local.decision : (live.decision || local.decision);
+}
+function tickCountdown(){
+  const dec = getDecision();
+  const endsIn = (dec.endsAt||0) - Date.now();
+  const text = dec.closed ? "Closed" : fmtMs(endsIn);
+  document.getElementById("pollEndsIn").innerText = text;
+  document.getElementById("decisionCountdown").innerText = text;
+
+  if(localMode && !dec.closed && endsIn <= 0){
+    local.decision.closed = true;
+    renderDecision(local.decision);
+    announceWinner(local.decision);
+    setAlert("🧾 Decision closed (time ended)");
+  }
+}
+setInterval(tickCountdown, 1000);
+
+/***********************
+ * COINS / INFLUENCE
+ ***********************/
+function getMyCoins(){
+  const name = getUserName();
+  if(localMode) return local.coins[name] || 0;
+  return (live.coinsObj && live.coinsObj[name]) ? live.coinsObj[name] : 0;
+}
+function setMyCoins(val){
+  const name = getUserName();
+  val = Math.max(0, (val|0));
+  if(localMode){
+    local.coins[name] = val;
+    renderCoins();
+    return;
+  }
+  refs.coins.child(name).set(val);
+}
+function addMyCoins(delta){
+  const name = getUserName();
+  delta = (delta|0);
+  if(localMode){
+    local.coins[name] = (local.coins[name]||0) + delta;
+    renderCoins();
+    return;
+  }
+  refs.coins.child(name).transaction(cur => (cur||0) + delta);
+}
+function getMyUsedThisDecision(){
+  const name = getUserName();
+  const dec = getDecision();
+  return (dec.usedBy && dec.usedBy[name]) ? (dec.usedBy[name]|0) : 0;
+}
+
+/***********************
+ * FEED LOGGING
+ ***********************/
+function logAction(msg){
+  setAlert(msg);
+  if(localMode){
+    local.feed.unshift({ msg, ts: Date.now() });
+    local.feed = local.feed.slice(0, 12);
+    renderFeed(local.feed);
+    return;
+  }
+  refs.feed.push({ msg, ts: Date.now() });
+}
+
+/***********************
+ * SUPPORT ACTIONS
+ ***********************/
+function supportAction(type, pounds){
+  const name = getUserName();
+  if(name === "Anonymous") return alert("Set a display name first.");
+
+  const influence = pounds * INFLUENCE_PER_POUND;
+  const msg = type === "time"
+    ? `⚡ ${name} supported £${pounds} → +${pounds} minute (+${influence} Influence)`
+    : `😈 ${name} supported £${pounds} → comfort removed (+${influence} Influence)`;
+
+    if(localMode){
+    local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
+    local.bounties = local.bounties.slice(0, 50);
+    renderBounties(local.bounties);
+    logAction(`🧩 ${name} submitted an idea (pending)`);
+    return;
+  }
+
+  refs.bounties.push(bounty);
+  logAction(`🧩 ${name} submitted an idea (pending)`);
+}
+
+function approveLatestBounty(){
+  if(!isHost()) return alert("Host only.");
+
+  if(localMode){
+    const item = local.bounties.find(b => b.status === "pending");
+    if(!item) return alert("No pending ideas.");
+    item.status = "approved";
+    renderBounties(local.bounties);
+    logAction(`✅ Host approved an idea: "${item.text}"`);
+    return;
+  }
+
+  const pending = (live.bounties || []).find(b => b.status === "pending");
+  if(!pending) return alert("No pending ideas.");
+  refs.bounties.child(pending.id).child("status").set("approved");
+  logAction(`✅ Host approved an idea: "${pending.text}"`);
+}
+
+/***********************
+ * HOST ACTIONS
+ ***********************/
+function closeDecision(){
+  if(!isHost()) return alert("Host only.");
+
+  if(localMode){
+    local.decision.closed = true;
+    local.decision.endsAt = Date.now();
+    renderDecision(local.decision);
+    announceWinner(local.decision);
+    return;
+  }
+
+  // Close for everyone
+  refs.decision.update({ closed: true, endsAt: Date.now() });
+}
+
+function resetEvent(){
+  if(!isHost()) return alert("Host only.");
+  const msg = "🔁 Host reset the event";
+
+  if(localMode){
+    local.totals = { total:0, supports:0, time:0, comfort:0 };
+    local.feed = [];
+    local.decision.closed = false;
+    local.decision.endsAt = Date.now() + 15*60*1000;
+    local.decision.usedBy = {};
+    Object.values(local.decision.options).forEach(o => o.votes = 0);
+    local.bounties = [];
+    renderAllFromLocal();
+    logAction(msg);
+    return;
+  }
+
+  refs.totals.set({ total:0, supports:0, time:0, comfort:0 });
+  refs.feed.remove();
+  refs.bounties.remove();
+  refs.decision.update({
+    closed: false,
+    endsAt: Date.now() + 15*60*1000,
+    usedBy: null
+  });
+
+  // reset votes in options
+  refs.decision.child("options").get().then(snap=>{
+    const obj = snap.val() || {};
+    Object.keys(obj).forEach(k=>{
+      refs.decision.child("options").child(k).child("votes").set(0);
+    });
+  });
+
+  logAction(msg);
+}
+
+/***********************
+ * BOOT
+ ***********************/
+loadProfile();
+updateHostUI();
+renderStream();
+renderAllFromLocal();
+
+// optional onboarding if you have it; safe if not
+if(typeof openOnboarding === "function") openOnboarding(false);
+
+// default tab if you have tabs; safe if not
+if(typeof selectTab === "function") selectTab("voteTab");
+
+// start firebase (falls back to local automatically)
+initData().catch(err=>{
+  console.log("Init error:", err);
+  localMode = true;
+  setModeLabel();
+  renderAllFromLocal();
+});
   </script>
 </body>
 </html>
