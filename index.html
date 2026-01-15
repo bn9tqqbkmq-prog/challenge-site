@@ -16,7 +16,17 @@
     text-align:center;
     /* NEW: richer background */
     background: radial-gradient(1200px 600px at 20% 0%, #1c1c1c 0%, #0b0b0b 45%, #000 100%);
-  }
+.grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:18px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+@media(min-width: 900px){
+  .grid{ grid-template-columns: 1.1fr 0.9fr; }
+}  }
 
     header {
       padding: 20px;
