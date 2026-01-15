@@ -1375,6 +1375,47 @@ function supportAction(type, pounds){
 }
 
 /***********************
+ * BOUNTY SUBMISSION
+ ***********************/
+function submitBounty(){
+  const name = getUserName();
+  if(name === "Anonymous") return alert("Set a display name first.");
+
+  const input = document.getElementById("bountyText");
+  if(!input) return alert("Bounty input not found.");
+
+  const idea = sanitizeIdea(input.value || "");
+  if(idea.length < 8) return alert("Please write a clearer idea (at least 8 characters).");
+
+  const coins = getMyCoins();
+  if(coins < BOUNTY_COST) return alert("Not enough Influence.");
+
+  // spend influence
+  setMyCoins(coins - BOUNTY_COST);
+  input.value = "";
+
+  const bounty = {
+    text: idea,
+    by: name,
+    ts: Date.now(),
+    status: "pending"
+  };
+
+  // LOCAL MODE
+  if(localMode){
+    local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
+    local.bounties = local.bounties.slice(0, 50);
+    renderBounties(local.bounties);
+    logAction(`🧩 ${name} submitted an idea (pending)`);
+    return;
+  }
+
+  // GLOBAL MODE (Firebase)
+  refs.bounties.push(bounty);
+  logAction(`🧩 ${name} submitted an idea (pending)`);
+}
+  
+/***********************
  * HOST ACTIONS
  ***********************/
 function closeDecision(){
