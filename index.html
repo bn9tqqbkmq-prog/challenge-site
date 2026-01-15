@@ -85,6 +85,19 @@
       box-shadow:none;
     }
 
+    /* Inputs */
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.35);
+      color: #fff;
+      font-size: 16px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
     footer{
       padding: 18px;
       font-size: 12px;
@@ -124,6 +137,23 @@
 
     <!-- RIGHT COLUMN -->
     <div id="rightCol">
+
+      <!-- PROFILE BOX (NEW) -->
+      <div class="box" id="profileBox">
+        <h2>👤 Your Profile</h2>
+
+        <div id="profileForm">
+          <p>Choose a display name:</p>
+          <input id="usernameInput" type="text" placeholder="Enter username" maxlength="20" />
+          <button onclick="saveProfile()">Save Profile</button>
+        </div>
+
+        <div id="profileWelcome" style="display:none;">
+          <p>Welcome, <strong><span id="displayName"></span></strong> 👋</p>
+          <button class="secondary" onclick="resetProfile()">Change Name</button>
+        </div>
+      </div>
+
       <div class="box">
         <h2>⚡ Challenge Effects</h2>
 
@@ -138,9 +168,11 @@
 
       <div class="box">
         <h2>🏆 Leaderboard</h2>
+        <div class="stat">👤 You: <span id="youName">Anonymous</span></div>
         <div class="stat">💰 Total Support: £<span id="total">0</span></div>
         <div class="stat">❤️ Total Supports: <span id="supports">0</span></div>
       </div>
+
     </div>
 
   </div>
@@ -150,6 +182,9 @@
   </footer>
 
   <script>
+    // ----------------------------
+    // Challenge counters
+    // ----------------------------
     let total = 0;
     let supports = 0;
     let time = 0;
@@ -183,6 +218,44 @@
       document.getElementById("time").innerText = time;
       document.getElementById("comfort").innerText = comfort;
     }
+
+    // ----------------------------
+    // Profile (local on device)
+    // ----------------------------
+    function loadProfile(){
+      const name = localStorage.getItem("challenge_username");
+      if(name){
+        document.getElementById("profileForm").style.display = "none";
+        document.getElementById("profileWelcome").style.display = "block";
+        document.getElementById("displayName").innerText = name;
+        document.getElementById("youName").innerText = name;
+      } else {
+        document.getElementById("youName").innerText = "Anonymous";
+      }
+    }
+
+    function saveProfile(){
+      const input = document.getElementById("usernameInput");
+      const name = (input.value || "").trim();
+
+      if(name.length < 2){
+        alert("Please enter at least 2 characters.");
+        return;
+      }
+      // Basic cleanup (no weird characters)
+      const safe = name.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
+      localStorage.setItem("challenge_username", safe);
+      loadProfile();
+    }
+
+    function resetProfile(){
+      localStorage.removeItem("challenge_username");
+      location.reload();
+    }
+
+    // Init on load
+    loadProfile();
+    update();
   </script>
 
 </body>
