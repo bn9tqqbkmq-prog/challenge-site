@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Firebase (Realtime DB) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 
   <style>
     body{
@@ -25,7 +29,7 @@
       background: rgba(0,0,0,0.15);
     }
 
-    /* Grid layout */
+    /* Two-column dashboard */
     .grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -39,29 +43,26 @@
       #rightCol{ position: sticky; top: 14px; align-self: start; }
     }
 
-    /* Card style */
     .box{
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
       padding: 18px;
-      margin: 0; /* grid handles spacing */
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
       backdrop-filter: blur(8px);
       text-align: left;
     }
 
-    /* Typography */
     h1,h2{ margin: 0 0 10px 0; }
     h2{ font-size: 18px; }
     p{ margin: 0 0 10px 0; opacity: 0.9; line-height: 1.5; }
+    .muted{ opacity: 0.75; font-size: 13px; }
 
     .stat{
       font-size: 18px;
       margin: 10px 0;
     }
 
-    /* Buttons */
     button{
       width:100%;
       padding:14px 16px;
@@ -70,7 +71,7 @@
       border-radius:12px;
       color:#fff;
       font-size:16px;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
       background: linear-gradient(135deg, #ff4d4d 0%, #ff1f6a 100%);
       box-shadow: 0 10px 20px rgba(255,77,77,0.25);
@@ -83,9 +84,9 @@
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
       box-shadow:none;
+      font-weight:700;
     }
 
-    /* Inputs */
     input{
       width:100%;
       padding:12px;
@@ -96,6 +97,35 @@
       font-size: 16px;
       outline: none;
       box-sizing: border-box;
+    }
+
+    /* Live action alert */
+    #liveAlert{
+      display:none;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      font-weight: 800;
+    }
+
+    /* Feed */
+    .feed{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .feed li{
+      padding:10px 12px;
+      border-radius:12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.25);
+      font-size: 14px;
+      opacity: 0.95;
     }
 
     footer{
@@ -120,30 +150,43 @@
 
   <div class="grid">
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT COLUMN (video + show info) -->
     <div id="leftCol">
+
       <div class="box" id="watch">
-        <h2>⏳ Live Starting Soon</h2>
-        <p>We’re preparing our first live challenge.</p>
-        <p>Come back soon to watch and take control.</p>
+        <h2>📺 Stream</h2>
+        <p class="muted">When you go live, your YouTube stream embed will go here.</p>
+        <div style="border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:14px; background: rgba(0,0,0,0.25);">
+          <p style="margin:0;"><strong>⏳ Live Starting Soon</strong></p>
+          <p style="margin:6px 0 0 0;" class="muted">Come back soon to watch and take control.</p>
+        </div>
       </div>
 
       <div class="box">
-        <h2>🎯 Live Challenge</h2>
+        <h2>🎯 Today’s Challenge</h2>
         <p><strong>Last to Leave the Room</strong></p>
-        <p>Support the challenge to raise the difficulty.</p>
+        <p>Viewers raise difficulty live. Support actions trigger effects.</p>
+        <p class="muted">Tip: keep rules clear + consistent for trust.</p>
       </div>
+
+      <div class="box">
+        <h2>📜 Rules</h2>
+        <p>• Participants can quit anytime.</p>
+        <p>• Support actions are for entertainment only.</p>
+        <p>• Effects are predefined and applied fairly.</p>
+      </div>
+
     </div>
 
-    <!-- RIGHT COLUMN -->
+    <!-- RIGHT COLUMN (profile first, then controls) -->
     <div id="rightCol">
 
-      <!-- PROFILE BOX (NEW) -->
+      <!-- PROFILE (TOP RIGHT) -->
       <div class="box" id="profileBox">
         <h2>👤 Your Profile</h2>
 
         <div id="profileForm">
-          <p>Choose a display name:</p>
+          <p class="muted">Choose a display name (saved on your device).</p>
           <input id="usernameInput" type="text" placeholder="Enter username" maxlength="20" />
           <button onclick="saveProfile()">Save Profile</button>
         </div>
@@ -154,8 +197,9 @@
         </div>
       </div>
 
+      <!-- CONTROLS -->
       <div class="box">
-        <h2>⚡ Challenge Effects</h2>
+        <h2>⚡ Live Controls</h2>
 
         <div class="stat">⏱ Time Added: <span id="time">0</span> minutes</div>
         <div class="stat">🪑 Comfort Removed: <span id="comfort">0</span></div>
@@ -163,14 +207,36 @@
         <button onclick="addTime()">⚡ Add 1 Minute</button>
         <button onclick="removeComfort()">😈 Remove Comfort</button>
 
-        <button class="secondary" onclick="resetAll()">Reset After Event</button>
+        <!-- Admin reset (hidden unless unlocked) -->
+        <div id="adminResetArea" style="display:none; margin-top:10px;">
+          <button class="secondary" onclick="resetAll()">Reset After Event (Admin)</button>
+        </div>
+
+        <!-- Admin unlock -->
+        <div id="adminUnlockArea" style="margin-top:10px;">
+          <input id="adminPin" type="password" placeholder="Admin PIN (host only)" />
+          <button class="secondary" onclick="unlockAdmin()">Unlock Admin</button>
+          <div class="muted">Only the host should know the PIN.</div>
+        </div>
+
+        <div id="liveAlert">Someone did something!</div>
       </div>
 
+      <!-- STATS -->
       <div class="box">
-        <h2>🏆 Leaderboard</h2>
+        <h2>🏆 Stats</h2>
         <div class="stat">👤 You: <span id="youName">Anonymous</span></div>
         <div class="stat">💰 Total Support: £<span id="total">0</span></div>
         <div class="stat">❤️ Total Supports: <span id="supports">0</span></div>
+        <div class="muted">Shared globally once Firebase is connected.</div>
+      </div>
+
+      <!-- FEED -->
+      <div class="box">
+        <h2>🧾 Recent Supporters</h2>
+        <ul class="feed" id="recentFeed">
+          <li class="muted">No actions yet.</li>
+        </ul>
       </div>
 
     </div>
@@ -178,50 +244,17 @@
   </div>
 
   <footer>
-    Donations support entertainment only. Donations do not guarantee outcomes or prizes.
+    Support is for entertainment only. No outcome/prize is guaranteed by support actions.
   </footer>
 
   <script>
-    // ----------------------------
-    // Challenge counters
-    // ----------------------------
-    let total = 0;
-    let supports = 0;
-    let time = 0;
-    let comfort = 0;
-
-    function addTime() {
-      total += 1;
-      supports += 1;
-      time += 1;
-      update();
+    // ============================
+    // PROFILE (local device)
+    // ============================
+    function getUserName(){
+      return localStorage.getItem("challenge_username") || "Anonymous";
     }
 
-    function removeComfort() {
-      total += 1;
-      supports += 1;
-      comfort += 1;
-      update();
-    }
-
-    function resetAll() {
-      total = 0;
-      supports = 0;
-      time = 0;
-      comfort = 0;
-      update();
-    }
-
-    function update() {
-      document.getElementById("total").innerText = total;
-      document.getElementById("supports").innerText = supports;
-      document.getElementById("time").innerText = time;
-      document.getElementById("comfort").innerText = comfort;
-    }
-
-    // ----------------------------
-    // Profile (local on device)
-    // ----------------------------
     function loadProfile(){
       const name = localStorage.getItem("challenge_username");
       if(name){
@@ -237,12 +270,10 @@
     function saveProfile(){
       const input = document.getElementById("usernameInput");
       const name = (input.value || "").trim();
-
       if(name.length < 2){
         alert("Please enter at least 2 characters.");
         return;
       }
-      // Basic cleanup (no weird characters)
       const safe = name.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
       localStorage.setItem("challenge_username", safe);
       loadProfile();
@@ -253,9 +284,205 @@
       location.reload();
     }
 
-    // Init on load
+    // ============================
+    // ADMIN LOCK (host only)
+    // ============================
+    // CHANGE THIS PIN
+    const ADMIN_PIN = "7391";
+
+    function updateAdminUI(){
+      const isAdmin = localStorage.getItem("challenge_admin") === "yes";
+      document.getElementById("adminResetArea").style.display = isAdmin ? "block" : "none";
+      document.getElementById("adminUnlockArea").style.display = isAdmin ? "none" : "block";
+    }
+
+    function unlockAdmin(){
+      const pin = (document.getElementById("adminPin").value || "").trim();
+      if(pin === ADMIN_PIN){
+        localStorage.setItem("challenge_admin", "yes");
+        updateAdminUI();
+        alert("Admin unlocked ✅");
+      } else {
+        alert("Wrong PIN ❌");
+      }
+    }
+
+    // ============================
+    // FIREBASE (shared/global)
+    // ============================
+    // Paste your Firebase config below:
+    const firebaseConfig = {
+      apiKey: "PASTE_HERE",
+      authDomain: "PASTE_HERE",
+      databaseURL: "PASTE_HERE",
+      projectId: "PASTE_HERE",
+      storageBucket: "PASTE_HERE",
+      messagingSenderId: "PASTE_HERE",
+      appId: "PASTE_HERE"
+    };
+
+    let firebaseReady = true;
+    try{
+      firebase.initializeApp(firebaseConfig);
+    } catch(e){
+      firebaseReady = false;
+      console.log("Firebase not configured yet:", e);
+    }
+    const localMode = !firebaseReady || (firebaseConfig.apiKey === "PASTE_HERE");
+
+    let totalsRef = null;
+    let feedRef = null;
+
+    // Local fallback state
+    let localTotals = { total: 0, supports: 0, time: 0, comfort: 0 };
+    let localFeed = [];
+
+    function setAlert(text){
+      const el = document.getElementById("liveAlert");
+      el.innerText = text;
+      el.style.display = "block";
+      clearTimeout(window.__alertTimer);
+      window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
+    }
+
+    function renderTotals(t){
+      document.getElementById("total").innerText = t.total || 0;
+      document.getElementById("supports").innerText = t.supports || 0;
+      document.getElementById("time").innerText = t.time || 0;
+      document.getElementById("comfort").innerText = t.comfort || 0;
+    }
+
+    function renderFeed(items){
+      const ul = document.getElementById("recentFeed");
+      ul.innerHTML = "";
+
+      if(!items || items.length === 0){
+        const li = document.createElement("li");
+        li.className = "muted";
+        li.innerText = "No actions yet.";
+        ul.appendChild(li);
+        return;
+      }
+
+      items.slice(0, 8).forEach(it => {
+        const li = document.createElement("li");
+        li.innerText = it.msg;
+        ul.appendChild(li);
+      });
+    }
+
+    function initShared(){
+      if(localMode){
+        renderTotals(localTotals);
+        renderFeed(localFeed);
+        return;
+      }
+
+      const db = firebase.database();
+      totalsRef = db.ref("challengeHub/totals");
+      feedRef = db.ref("challengeHub/feed");
+
+      totalsRef.get().then((snap) => {
+        if(!snap.exists()){
+          totalsRef.set({ total: 0, supports: 0, time: 0, comfort: 0 });
+        }
+      });
+
+      totalsRef.on("value", (snap) => {
+        const t = snap.val() || { total: 0, supports: 0, time: 0, comfort: 0 };
+        renderTotals(t);
+      });
+
+      feedRef.limitToLast(8).on("value", (snap) => {
+        const obj = snap.val() || {};
+        const items = Object.values(obj).sort((a,b) => (b.ts||0) - (a.ts||0));
+        renderFeed(items);
+      });
+    }
+
+    function logAction(msg){
+      setAlert(msg);
+
+      if(localMode){
+        localFeed.unshift({ msg, ts: Date.now() });
+        localFeed = localFeed.slice(0, 8);
+        renderFeed(localFeed);
+        return;
+      }
+
+      feedRef.push({ msg, ts: Date.now() });
+    }
+
+    function addTime(){
+      const name = getUserName();
+      const msg = `⚡ ${name} added 1 minute`;
+
+      if(localMode){
+        localTotals.total += 1;
+        localTotals.supports += 1;
+        localTotals.time += 1;
+        renderTotals(localTotals);
+        logAction(msg);
+        return;
+      }
+
+      totalsRef.child("total").transaction(cur => (cur||0) + 1);
+      totalsRef.child("supports").transaction(cur => (cur||0) + 1);
+      totalsRef.child("time").transaction(cur => (cur||0) + 1);
+      logAction(msg);
+    }
+
+    function removeComfort(){
+      const name = getUserName();
+      const msg = `😈 ${name} removed comfort`;
+
+      if(localMode){
+        localTotals.total += 1;
+        localTotals.supports += 1;
+        localTotals.comfort += 1;
+        renderTotals(localTotals);
+        logAction(msg);
+        return;
+      }
+
+      totalsRef.child("total").transaction(cur => (cur||0) + 1);
+      totalsRef.child("supports").transaction(cur => (cur||0) + 1);
+      totalsRef.child("comfort").transaction(cur => (cur||0) + 1);
+      logAction(msg);
+    }
+
+    function resetAll(){
+      // HARD BLOCK: viewers cannot reset even if they try calling resetAll()
+      if(localStorage.getItem("challenge_admin") !== "yes"){
+        alert("Admin only.");
+        return;
+      }
+
+      const name = getUserName();
+      const msg = `🔁 ${name} reset the event`;
+
+      if(localMode){
+        localTotals = { total: 0, supports: 0, time: 0, comfort: 0 };
+        localFeed = [];
+        renderTotals(localTotals);
+        renderFeed(localFeed);
+        logAction(msg);
+        return;
+      }
+
+      totalsRef.set({ total: 0, supports: 0, time: 0, comfort: 0 });
+      feedRef.remove();
+      logAction(msg);
+    }
+
+    // Boot
     loadProfile();
-    update();
+    initShared();
+    updateAdminUI();
+
+    if(localMode){
+      console.log("Running in LOCAL MODE. Paste Firebase config to make totals/feed shared globally.");
+    }
   </script>
 
 </body>
