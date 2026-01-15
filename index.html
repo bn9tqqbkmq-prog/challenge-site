@@ -10,49 +10,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Firebase (optional; if not configured runs local) -->
+  <!-- Firebase (optional; if not configured it runs LOCAL) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 
   <style>
     :root{
-      --bg0:#050505;
-      --bg1:#0b0b0b;
       --glass: rgba(255,255,255,0.06);
-      --glass2: rgba(0,0,0,0.40);
       --stroke: rgba(255,255,255,0.13);
       --stroke2: rgba(255,255,255,0.18);
       --hot1:#ff4d4d;
       --hot2:#ff1f6a;
       --good1:#2af598;
       --good2:#00c3ff;
-      --warn:#ffd24d;
-      --bad:#ff5c5c;
     }
-
-    *{ box-sizing: border-box; }
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:#fff;
-      background:
-        radial-gradient(1200px 700px at 18% 0%, #1a1a1a 0%, #0b0b0b 45%, #000 100%);
+      background: radial-gradient(1200px 700px at 18% 0%, #1a1a1a 0%, #0b0b0b 45%, #000 100%);
     }
 
-    /* ===== Top bar ===== */
     header{
-      position: sticky;
-      top:0;
-      z-index: 50;
+      position: sticky; top:0; z-index: 50;
       backdrop-filter: blur(12px);
       background: rgba(0,0,0,0.28);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .wrap{ max-width: 1180px; margin:0 auto; padding: 14px 12px; }
     .topbar{ display:flex; gap:12px; align-items:center; justify-content: space-between; flex-wrap: wrap; }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; }
     .logo{
       width:42px; height:42px; border-radius: 14px;
       background: linear-gradient(135deg, var(--hot1), var(--hot2));
@@ -61,29 +49,13 @@
       font-weight: 900;
       letter-spacing: 0.5px;
     }
-    .title{
-      margin:0;
-      font-weight: 900;
-      font-size: 16px;
-      line-height: 1.2;
-    }
-    .subtitle{
-      margin:3px 0 0 0;
-      opacity: 0.75;
-      font-size: 12px;
-      line-height: 1.3;
-    }
+    .title{ margin:0; font-weight: 900; font-size: 16px; line-height: 1.2; }
+    .subtitle{ margin:3px 0 0 0; opacity: 0.75; font-size: 12px; line-height: 1.3; }
     .pill{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 10px;
-      border:1px solid var(--stroke);
-      border-radius: 999px;
-      background: rgba(0,0,0,0.28);
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0.95;
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px; border:1px solid var(--stroke);
+      border-radius: 999px; background: rgba(0,0,0,0.28);
+      font-size: 12px; white-space: nowrap; opacity: 0.95;
     }
     .dot{
       width:10px; height:10px; border-radius: 50%;
@@ -99,7 +71,6 @@
     .topRight{ display:flex; gap:10px; align-items:center; flex-wrap: wrap; justify-content:flex-end; }
     .modeTag{ font-weight: 800; }
 
-    /* ===== Layout ===== */
     .grid{
       max-width: 1180px;
       margin: 0 auto;
@@ -121,11 +92,7 @@
       box-shadow: 0 14px 40px rgba(0,0,0,0.36);
       backdrop-filter: blur(10px);
     }
-    h2{
-      margin:0 0 10px 0;
-      font-size: 15px;
-      letter-spacing: 0.2px;
-    }
+    h2{ margin:0 0 10px 0; font-size: 15px; letter-spacing: 0.2px; }
     p{ margin:0 0 10px 0; opacity: 0.9; line-height: 1.5; }
     .muted{ opacity: 0.7; font-size: 12px; }
     .row{ display:flex; gap:10px; align-items:center; justify-content: space-between; flex-wrap: wrap; }
@@ -156,11 +123,7 @@
       background: linear-gradient(135deg, var(--good1) 0%, var(--good2) 100%);
       box-shadow: 0 12px 22px rgba(38,230,164,0.16);
     }
-    button:disabled{
-      opacity: 0.55;
-      cursor:not-allowed;
-      filter: none;
-    }
+    button:disabled{ opacity: 0.55; cursor:not-allowed; filter: none; }
 
     input, textarea, select{
       width: 100%;
@@ -175,7 +138,6 @@
     }
     textarea{ resize: vertical; min-height: 86px; }
 
-    /* ===== Stream (YouTube/Twitch) ===== */
     .videoShell{
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 18px;
@@ -184,10 +146,7 @@
     }
     .videoTop{
       padding: 12px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content: space-between;
+      display:flex; gap:10px; align-items:center; justify-content: space-between;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       background: rgba(0,0,0,0.18);
     }
@@ -195,13 +154,11 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       background: radial-gradient(800px 300px at 50% 15%, rgba(255,77,77,0.18), rgba(0,0,0,0.35));
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       padding: 14px;
     }
     iframe{ width:100%; height:100%; border:0; }
 
-    /* ===== TikTok-style feed ===== */
     .shortsGrid{
       display:grid;
       grid-template-columns: 1fr;
@@ -240,7 +197,6 @@
       white-space: nowrap;
     }
 
-    /* ===== Stats ===== */
     .statGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -255,7 +211,6 @@
     .statLabel{ font-size: 12px; opacity: 0.7; margin:0 0 6px 0; }
     .statValue{ font-size: 18px; font-weight: 900; margin:0; }
 
-    /* ===== Progress / milestones ===== */
     .progress{
       height: 12px;
       border-radius: 999px;
@@ -274,12 +229,8 @@
       background: linear-gradient(90deg, rgba(38,230,164,0.95), rgba(0,195,255,0.95));
     }
 
-    /* ===== Poll ===== */
     .pollOpt{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content: space-between;
+      display:flex; gap:10px; align-items:center; justify-content: space-between;
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.10);
@@ -288,17 +239,12 @@
     }
     .pollLeft{ min-width: 0; }
     .pollName{
-      margin:0;
-      font-weight: 900;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
+      margin:0; font-weight: 900; font-size: 14px;
+      white-space: nowrap; overflow:hidden; text-overflow: ellipsis;
     }
     .pollMeta{ margin:6px 0 0 0; font-size: 12px; opacity: 0.7; }
     .pollBtn{
-      width:auto;
-      margin:0;
+      width:auto; margin:0;
       padding: 10px 12px;
       border-radius: 12px;
       font-size: 13px;
@@ -306,7 +252,6 @@
       white-space: nowrap;
     }
 
-    /* ===== Feeds ===== */
     .feed{
       list-style:none;
       padding:0;
@@ -324,7 +269,6 @@
       opacity: 0.96;
     }
 
-    /* ===== Alerts ===== */
     #liveAlert{
       display:none;
       margin-top: 10px;
@@ -334,16 +278,10 @@
       background: rgba(255,255,255,0.06);
       font-weight: 900;
     }
-    .warnBox{
-      border:1px solid rgba(255,210,77,0.35);
-      background: rgba(255,210,77,0.08);
-      border-radius: 14px;
-      padding: 10px 12px;
-      margin-top: 10px;
-    }
-    .dangerBox{
-      border:1px solid rgba(255,92,92,0.35);
-      background: rgba(255,92,92,0.08);
+
+    .hint{
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.20);
       border-radius: 14px;
       padding: 10px 12px;
       margin-top: 10px;
@@ -380,11 +318,8 @@
 </header>
 
 <div class="grid">
-
-  <!-- LEFT: Watch + Shorts + About -->
+  <!-- LEFT -->
   <div id="leftCol">
-
-    <!-- STREAM -->
     <div class="box">
       <div class="row">
         <h2 style="margin:0;">📺 Watch</h2>
@@ -396,38 +331,33 @@
           <span class="pill">Stream source: <strong id="streamSourceLabel">Placeholder</strong></span>
           <button class="secondary pollBtn" style="width:auto; margin:0;" onclick="toggleStreamConfig()">Set Stream</button>
         </div>
-
-        <!-- Replace with actual embed once set -->
         <div class="videoFrame" id="videoFrame">
           <div style="text-align:center; max-width: 520px;">
             <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
-            <p class="muted" style="margin:8px 0 0 0;">Add a YouTube Live or Twitch embed in “Set Stream”.</p>
+            <p class="muted" style="margin:8px 0 0 0;">Add a YouTube/Twitch embed in “Set Stream”.</p>
           </div>
         </div>
       </div>
 
       <div id="streamConfig" style="display:none; margin-top:12px;">
         <p class="muted">Pick a provider and paste the embed URL.</p>
-        <div class="row" style="gap:10px; align-items:flex-start;">
-          <select id="streamProvider">
-            <option value="youtube">YouTube (embed URL)</option>
-            <option value="twitch">Twitch (embed URL)</option>
-          </select>
-        </div>
-        <input id="streamUrl" placeholder="Example: https://www.youtube.com/embed/VIDEO_ID  (or Twitch embed URL)" />
+        <select id="streamProvider">
+          <option value="youtube">YouTube (embed URL)</option>
+          <option value="twitch">Twitch (embed URL)</option>
+        </select>
+        <input id="streamUrl" placeholder="Example: https://www.youtube.com/embed/VIDEO_ID (or Twitch embed URL)" />
         <button class="good" onclick="saveStream()">Save Stream</button>
-        <div class="warnBox">
+        <div class="hint">
           <p style="margin:0;"><strong>Tip:</strong> Use embed URLs (not normal watch URLs).</p>
-          <p class="muted" style="margin:6px 0 0 0;">YouTube: /embed/VIDEO_ID — Twitch: player.twitch.tv/?channel=NAME&parent=YOURDOMAIN</p>
+          <p class="muted" style="margin:6px 0 0 0;">Twitch embeds need <em>parent=yourdomain</em> when hosted online.</p>
         </div>
       </div>
     </div>
 
-    <!-- SHORTS / DISCOVERY -->
     <div class="box">
       <div class="row">
         <h2 style="margin:0;">📲 Shorts Feed (TikTok vibe)</h2>
-        <span class="pill">Swipe-style UI (cards for now)</span>
+        <span class="pill">cards (v1)</span>
       </div>
 
       <div class="shortsGrid" style="margin-top:10px;">
@@ -436,72 +366,47 @@
           <div class="shortBody">
             <p class="shortTitle">🔥 “Comfort Removed” chaos</p>
             <p class="shortMeta">42s • 12.3k views • 1h ago</p>
-            <div class="badgeRow">
-              <span class="chip">#crowdcontrol</span><span class="chip">#hardmode</span>
-            </div>
+            <div class="badgeRow"><span class="chip">#crowdcontrol</span><span class="chip">#hardmode</span></div>
           </div>
         </div>
-
         <div class="shortCard">
           <div class="shortThumb"></div>
           <div class="shortBody">
             <p class="shortTitle">😂 “+1 Minute” spam wave</p>
             <p class="shortMeta">31s • 8.2k views • 2h ago</p>
-            <div class="badgeRow">
-              <span class="chip">#vote</span><span class="chip">#live</span>
-            </div>
+            <div class="badgeRow"><span class="chip">#vote</span><span class="chip">#live</span></div>
           </div>
         </div>
-
         <div class="shortCard">
           <div class="shortThumb"></div>
           <div class="shortBody">
             <p class="shortTitle">🎬 Episode 1 recap (highlights)</p>
             <p class="shortMeta">6m • 28k views • yesterday</p>
-            <div class="badgeRow">
-              <span class="chip">#arc</span><span class="chip">#story</span>
-            </div>
+            <div class="badgeRow"><span class="chip">#arc</span><span class="chip">#story</span></div>
           </div>
         </div>
-
         <div class="shortCard">
           <div class="shortThumb"></div>
           <div class="shortBody">
             <p class="shortTitle">🗳️ Poll result reveal</p>
             <p class="shortMeta">1m • 4.7k views • yesterday</p>
-            <div class="badgeRow">
-              <span class="chip">#decision</span><span class="chip">#results</span>
-            </div>
+            <div class="badgeRow"><span class="chip">#decision</span><span class="chip">#results</span></div>
           </div>
         </div>
       </div>
 
-      <p class="muted" style="margin-top:10px;">
-        Later: store real clip URLs/metadata in Firebase and render here.
-      </p>
+      <p class="muted" style="margin-top:10px;">Later: store real clip URLs/metadata in Firebase and render here.</p>
     </div>
 
-    <!-- RULES -->
     <div class="box">
-      <h2>📜 Safety & Trust Rules</h2>
-      <p><strong>Audience can influence only pre-approved options.</strong> No unsafe or illegal suggestions.</p>
-      <div class="row" style="gap:10px; align-items:flex-start;">
-        <div class="warnBox" style="flex:1;">
-          <p style="margin:0;"><strong>✅ Allowed</strong></p>
-          <p class="muted" style="margin:6px 0 0 0;">fun twists, difficulty changes, harmless dares, time modifiers.</p>
-        </div>
-        <div class="dangerBox" style="flex:1;">
-          <p style="margin:0;"><strong>🚫 Not Allowed</strong></p>
-          <p class="muted" style="margin:6px 0 0 0;">self-harm, dangerous stunts, doxxing, harassment, illegal acts.</p>
-        </div>
-      </div>
+      <h2>📜 Safety & Trust</h2>
+      <p><strong>Audience can influence only pre-approved options.</strong> No dangerous/illegal suggestions.</p>
+      <p class="muted">This keeps it fun, fair, and stream-safe.</p>
     </div>
   </div>
 
-  <!-- RIGHT: Profile + Wallet + Poll + Controls + Bounties + Feeds -->
+  <!-- RIGHT -->
   <div id="rightCol">
-
-    <!-- PROFILE -->
     <div class="box">
       <h2>👤 Profile</h2>
 
@@ -521,7 +426,6 @@
       </div>
     </div>
 
-    <!-- WALLET -->
     <div class="box">
       <div class="row">
         <h2 style="margin:0;">💠 Influence Wallet</h2>
@@ -539,12 +443,9 @@
         </div>
       </div>
 
-      <p class="muted" style="margin-top:10px;">
-        Support actions earn coins. Coins are vote credits (with caps so one person can’t buy the whole outcome).
-      </p>
+      <p class="muted" style="margin-top:10px;">Support actions earn coins. Coins vote (with caps).</p>
     </div>
 
-    <!-- DECISION (POLL) -->
     <div class="box">
       <div class="row">
         <h2 style="margin:0;">🗳️ Decision Point</h2>
@@ -552,16 +453,14 @@
       </div>
 
       <p style="margin-top:8px;"><strong id="pollQuestion">Pick the next twist:</strong></p>
-      <p class="muted" id="pollDesc">Spend coins to vote. First 100 coins are strongest; after that, votes diminish.</p>
+      <p class="muted" id="pollDesc">Spend coins to vote. First 100 coins strongest; then diminished.</p>
 
       <div id="pollOptions"></div>
-
       <div id="liveAlert">Someone did something!</div>
     </div>
 
-    <!-- SUPPORT ACTIONS (Crowd control) -->
     <div class="box">
-      <h2>⚡ Crowd Control (support → effects + coins)</h2>
+      <h2>⚡ Crowd Control</h2>
 
       <div class="statGrid">
         <div class="statCard">
@@ -577,14 +476,12 @@
       <button onclick="supportAction('time', 1)">⚡ Support £1 → +1 minute (earn 10 coins)</button>
       <button onclick="supportAction('comfort', 1)">😈 Support £1 → remove comfort (earn 10 coins)</button>
 
-      <p class="muted" style="margin-top:10px;">
-        Later: replace these with Stripe payments. On payment success, call supportAction().
-      </p>
+      <p class="muted" style="margin-top:10px;">Later: replace with Stripe. On payment success, call supportAction().</p>
 
-      <!-- Host controls -->
       <div id="hostArea" style="display:none; margin-top:10px;">
         <button class="secondary" onclick="closeDecision()">Close Decision + Announce Winner (Host)</button>
         <button class="secondary" onclick="resetEvent()">Reset Event (Host)</button>
+        <button class="secondary" onclick="approveLatestBounty()">Approve latest pending bounty (Host)</button>
       </div>
 
       <div id="hostUnlock" style="margin-top:10px;">
@@ -594,12 +491,12 @@
       </div>
     </div>
 
-    <!-- MILESTONES -->
     <div class="box">
       <div class="row">
-        <h2 style="margin:0;">🚀 Milestones (unlock twists)</h2>
+        <h2 style="margin:0;">🚀 Milestones</h2>
         <span class="pill">Total: £<strong id="total">0</strong></span>
       </div>
+
       <p class="muted" style="margin-top:8px;">Hit goals to unlock bigger moments.</p>
 
       <div style="margin-top:10px;">
@@ -615,43 +512,28 @@
       </div>
     </div>
 
-    <!-- BOUNTY BOARD -->
     <div class="box">
       <div class="row">
         <h2 style="margin:0;">🧩 Bounty Board (ideas)</h2>
         <span class="pill">Host approves</span>
       </div>
 
-      <p class="muted" style="margin-top:8px;">
-        Submit safe ideas. Host can approve them to add into future polls.
-      </p>
+      <p class="muted" style="margin-top:8px;">Submit safe ideas. Host approves them for future polls.</p>
 
-      <textarea id="bountyText" placeholder="Suggest a SAFE idea (e.g., 'sing karaoke 60s', 'hard mode 5 min')"></textarea>
+      <textarea id="bountyText" placeholder="Suggest a SAFE idea (e.g., 'sing karaoke 60s')"></textarea>
       <button class="good" onclick="submitBounty()">Submit Idea (cost: 30 coins)</button>
-
-      <div class="warnBox">
-        <p style="margin:0;"><strong>Moderation:</strong></p>
-        <p class="muted" style="margin:6px 0 0 0;">All ideas are pending until host approves.</p>
-      </div>
 
       <ul class="feed" id="bountyFeed" style="margin-top:12px;">
         <li class="muted">No bounty ideas yet.</li>
       </ul>
-
-      <!-- Host approval UI -->
-      <div id="approveArea" style="display:none; margin-top:10px;">
-        <button class="secondary" onclick="approveLatestBounty()">Approve latest pending bounty (Host)</button>
-      </div>
     </div>
 
-    <!-- LIVE FEED -->
     <div class="box">
       <h2>🧾 Live Feed</h2>
       <ul class="feed" id="recentFeed">
         <li class="muted">No actions yet.</li>
       </ul>
     </div>
-
   </div>
 </div>
 
@@ -660,843 +542,603 @@
 </footer>
 
 <script>
-/* =========================================================
-   QUICK START (IMPORTANT)
-   1) Paste Firebase config below if you want GLOBAL (shared)
-   2) If not configured, it runs LOCAL (still works)
-   3) If you got "timeouts" before, this version:
-      - falls back to LOCAL if Firebase doesn't connect quickly
-      - avoids hanging .get() calls
-   ========================================================= */
+  /***********************
+   * CONFIG (Firebase optional)
+   ***********************/
+  const firebaseConfig = {
+    apiKey: "PASTE_HERE",
+    authDomain: "PASTE_HERE",
+    databaseURL: "PASTE_HERE",
+    projectId: "PASTE_HERE",
+    storageBucket: "PASTE_HERE",
+    messagingSenderId: "PASTE_HERE",
+    appId: "PASTE_HERE"
+  };
 
-const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  databaseURL: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
-};
+  /***********************
+   * ECONOMY / RULES
+   ***********************/
+  const COINS_PER_POUND = 10;
+  const CAP_PER_DECISION = 250;
+  const DIMINISH_THRESHOLD = 100;
+  const VOTE_COST = 25;
+  const BOUNTY_COST = 30;
 
-/* ===== Influence rules ===== */
-const COINS_PER_POUND = 10;      // £1 => 10 coins
-const CAP_PER_DECISION = 250;    // max coins spent per decision per user
-const DIMINISH_THRESHOLD = 100;  // first 100 coins are strongest
-document.getElementById("capLabel").innerText = CAP_PER_DECISION;
-
-function votePower(coinSpend){
-  const a = Math.min(coinSpend, DIMINISH_THRESHOLD);
-  const b = Math.max(0, coinSpend - DIMINISH_THRESHOLD);
-  return a + Math.floor(b * 0.4);
-}
-
-/* ===== Profile (local device) ===== */
-function getUserName(){ return localStorage.getItem("cv_username") || "Anonymous"; }
-
-function loadProfile(){
-  const name = localStorage.getItem("cv_username");
-  if(name){
-    document.getElementById("profileForm").style.display = "none";
-    document.getElementById("profileWelcome").style.display = "block";
-    document.getElementById("displayName").innerText = name;
-    document.getElementById("youName").innerText = name;
-  } else {
-    document.getElementById("youName").innerText = "Anonymous";
-  }
-}
-
-function saveProfile(){
-  const raw = (document.getElementById("usernameInput").value || "").trim();
-  if(raw.length < 2){ alert("Please enter at least 2 characters."); return; }
-  const safe = raw.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
-  localStorage.setItem("cv_username", safe);
-  loadProfile();
-}
-
-function resetProfile(){
-  localStorage.removeItem("cv_username");
-  localStorage.removeItem("cv_host");
-  location.reload();
-}
-
-/* ===== Host lock (prototype only) ===== */
-const HOST_PIN = "7391"; // change me (prototype only)
-
-function updateHostUI(){
-  const isHost = localStorage.getItem("cv_host") === "yes";
-  document.getElementById("hostArea").style.display = isHost ? "block" : "none";
-  document.getElementById("approveArea").style.display = isHost ? "block" : "none";
-  document.getElementById("hostUnlock").style.display = isHost ? "none" : "block";
-}
-
-function unlockHost(){
-  const pin = (document.getElementById("hostPin").value || "").trim();
-  if(pin === HOST_PIN){
-    localStorage.setItem("cv_host", "yes");
-    updateHostUI();
-    alert("Host unlocked ✅");
-  } else {
-    alert("Wrong PIN ❌");
-  }
-}
-
-/* ===== Stream config (local) ===== */
-function toggleStreamConfig(){
-  const el = document.getElementById("streamConfig");
-  el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
-}
-
-function saveStream(){
-  const provider = document.getElementById("streamProvider").value;
-  const url = (document.getElementById("streamUrl").value || "").trim();
-  if(!url){ alert("Paste an embed URL."); return; }
-  localStorage.setItem("cv_stream_provider", provider);
-  localStorage.setItem("cv_stream_url", url);
-  renderStream();
-  document.getElementById("streamConfig").style.display = "none";
-}
-
-function renderStream(){
-  const provider = localStorage.getItem("cv_stream_provider");
-  const url = localStorage.getItem("cv_stream_url");
-  const label = document.getElementById("streamSourceLabel");
-  const frame = document.getElementById("videoFrame");
-
-  if(!provider || !url){
-    label.innerText = "Placeholder";
-    frame.innerHTML = `
-      <div style="text-align:center; max-width: 520px;">
-        <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
-        <p class="muted" style="margin:8px 0 0 0;">Add a YouTube Live or Twitch embed in “Set Stream”.</p>
-      </div>`;
-    return;
+  function votePower(coinSpend){
+    const a = Math.min(coinSpend, DIMINISH_THRESHOLD);
+    const b = Math.max(0, coinSpend - DIMINISH_THRESHOLD);
+    return a + Math.floor(b * 0.4);
   }
 
-  label.innerText = provider === "youtube" ? "YouTube" : "Twitch";
-  frame.innerHTML = `<iframe src="${escapeHtml(url)}" allowfullscreen></iframe>`;
-}
-function escapeHtml(s){
-  return String(s).replace(/"/g, "&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
+  /***********************
+   * HOST (prototype)
+   ***********************/
+  const HOST_PIN = "7391"; // change
+  function isHost(){ return localStorage.getItem("cv_host") === "yes"; }
 
-/* ===== Alert ===== */
-function setAlert(text){
-  const el = document.getElementById("liveAlert");
-  el.innerText = text;
-  el.style.display = "block";
-  clearTimeout(window.__alertTimer);
-  window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
-}
-
-/* =========================================================
-   DATA MODEL
-   - totals: { total, supports, time, comfort }
-   - feed:   push { msg, ts }
-   - coins:  { [username]: number }
-   - decision: { id, question, desc, endsAt, closed, options, usedBy }
-   - bounties: push { text, by, ts, status }
-   ========================================================= */
-
-/* ===== Local state fallback ===== */
-let local = {
-  arc: {
-    title: "ChallengeVerse — “Last To Leave” (Season 1)",
-    subtitle: "YouTube depth + Twitch live control + TikTok discovery — in one room."
-  },
-  totals: { total:0, supports:0, time:0, comfort:0 },
-  feed: [],
-  coins: {},
-  decision: {
-    id: "dp_001",
-    question: "Pick the next twist:",
-    desc: "Spend coins to vote. First 100 coins are strongest; after that, votes diminish.",
-    endsAt: Date.now() + 15*60*1000,
-    closed: false,
-    options: {
-      a: { name: "Ice water face splash (safe)", votes: 0 },
-      b: { name: "Hard Mode for 5 minutes", votes: 0 },
-      c: { name: "No sitting for 10 minutes", votes: 0 }
-    },
-    usedBy: {}
-  },
-  bounties: []
-};
-
-/* ===== Firebase wiring (optional) ===== */
-let localMode = true;
-let refs = null;
-let live = { coinsObj:{}, decision:null, bounties:[], totals:null };
-
-function isFirebaseConfigured(){
-  return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_HERE";
-}
-
-function setModeLabel(){
-  document.getElementById("modeLabel").innerText = localMode ? "Local" : "Global";
-}
-
-async function initData(){
-  // Default to local
-  localMode = true;
-  setModeLabel();
-
-  if(!isFirebaseConfigured()){
-    console.log("LOCAL MODE: paste Firebase config to go global.");
-    renderAllFromLocal();
-    return;
+  function unlockHost(){
+    const pin = (document.getElementById("hostPin").value || "").trim();
+    if(pin === HOST_PIN){
+      localStorage.setItem("cv_host", "yes");
+      updateHostUI();
+      alert("Host unlocked ✅");
+    } else alert("Wrong PIN ❌");
+  }
+  function updateHostUI(){
+    document.getElementById("hostArea").style.display = isHost() ? "block" : "none";
+    document.getElementById("hostUnlock").style.display = isHost() ? "none" : "block";
   }
 
-  // Try Firebase, but bail out quickly if it can't connect (prevents “timeout” feeling)
-  const CONNECT_TIMEOUT_MS = 2200;
+  /***********************
+   * PROFILE
+   ***********************/
+  function getUserName(){ return localStorage.getItem("cv_username") || "Anonymous"; }
 
-  try{
-    firebase.initializeApp(firebaseConfig);
-  } catch(e){
-    // If already initialized, ignore
+  function loadProfile(){
+    const name = localStorage.getItem("cv_username");
+    if(name){
+      document.getElementById("profileForm").style.display = "none";
+      document.getElementById("profileWelcome").style.display = "block";
+      document.getElementById("displayName").innerText = name;
+      document.getElementById("youName").innerText = name;
+    } else {
+      document.getElementById("youName").innerText = "Anonymous";
+    }
   }
-
-  const db = firebase.database();
-  refs = {<script>
-/* =========================================================
-   QUICK START (IMPORTANT)
-   1) Paste Firebase config below if you want GLOBAL (shared)
-   2) If not configured, it runs LOCAL (still works)
-   3) If you got "timeouts" before, this version:
-      - falls back to LOCAL if Firebase doesn't connect quickly
-      - avoids hanging .get() calls
-   ========================================================= */
-
-const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  databaseURL: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
-};
-
-/* ===== Influence rules ===== */
-const COINS_PER_POUND = 10;      // £1 => 10 coins
-const CAP_PER_DECISION = 250;    // max coins spent per decision per user
-const DIMINISH_THRESHOLD = 100;  // first 100 coins are strongest
-document.getElementById("capLabel").innerText = CAP_PER_DECISION;
-
-function votePower(coinSpend){
-  const a = Math.min(coinSpend, DIMINISH_THRESHOLD);
-  const b = Math.max(0, coinSpend - DIMINISH_THRESHOLD);
-  return a + Math.floor(b * 0.4);
-}
-
-/* ===== Profile (local device) ===== */
-function getUserName(){ return localStorage.getItem("cv_username") || "Anonymous"; }
-
-function loadProfile(){
-  const name = localStorage.getItem("cv_username");
-  if(name){
-    document.getElementById("profileForm").style.display = "none";
-    document.getElementById("profileWelcome").style.display = "block";
-    document.getElementById("displayName").innerText = name;
-    document.getElementById("youName").innerText = name;
-  } else {
-    document.getElementById("youName").innerText = "Anonymous";
-  }
-}
-
-function saveProfile(){
-  const raw = (document.getElementById("usernameInput").value || "").trim();
-  if(raw.length < 2){ alert("Please enter at least 2 characters."); return; }
-  const safe = raw.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
-  localStorage.setItem("cv_username", safe);
-  loadProfile();
-}
-
-function resetProfile(){
-  localStorage.removeItem("cv_username");
-  localStorage.removeItem("cv_host");
-  location.reload();
-}
-
-/* ===== Host lock (prototype only) ===== */
-const HOST_PIN = "7391"; // change me (prototype only)
-
-function updateHostUI(){
-  const isHost = localStorage.getItem("cv_host") === "yes";
-  document.getElementById("hostArea").style.display = isHost ? "block" : "none";
-  document.getElementById("approveArea").style.display = isHost ? "block" : "none";
-  document.getElementById("hostUnlock").style.display = isHost ? "none" : "block";
-}
-
-function unlockHost(){
-  const pin = (document.getElementById("hostPin").value || "").trim();
-  if(pin === HOST_PIN){
-    localStorage.setItem("cv_host", "yes");
-    updateHostUI();
-    alert("Host unlocked ✅");
-  } else {
-    alert("Wrong PIN ❌");
-  }
-}
-
-/* ===== Stream config (local) ===== */
-function toggleStreamConfig(){
-  const el = document.getElementById("streamConfig");
-  el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
-}
-
-function saveStream(){
-  const provider = document.getElementById("streamProvider").value;
-  const url = (document.getElementById("streamUrl").value || "").trim();
-  if(!url){ alert("Paste an embed URL."); return; }
-  localStorage.setItem("cv_stream_provider", provider);
-  localStorage.setItem("cv_stream_url", url);
-  renderStream();
-  document.getElementById("streamConfig").style.display = "none";
-}
-
-function renderStream(){
-  const provider = localStorage.getItem("cv_stream_provider");
-  const url = localStorage.getItem("cv_stream_url");
-  const label = document.getElementById("streamSourceLabel");
-  const frame = document.getElementById("videoFrame");
-
-  if(!provider || !url){
-    label.innerText = "Placeholder";
-    frame.innerHTML = `
-      <div style="text-align:center; max-width: 520px;">
-        <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
-        <p class="muted" style="margin:8px 0 0 0;">Add a YouTube Live or Twitch embed in “Set Stream”.</p>
-      </div>`;
-    return;
-  }
-
-  label.innerText = provider === "youtube" ? "YouTube" : "Twitch";
-  frame.innerHTML = `<iframe src="${escapeHtml(url)}" allowfullscreen></iframe>`;
-}
-function escapeHtml(s){
-  return String(s).replace(/"/g, "&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
-/* ===== Alert ===== */
-function setAlert(text){
-  const el = document.getElementById("liveAlert");
-  el.innerText = text;
-  el.style.display = "block";
-  clearTimeout(window.__alertTimer);
-  window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
-}
-
-/* ===== Local state fallback ===== */
-let local = {
-  arc: {
-    title: "ChallengeVerse — “Last To Leave” (Season 1)",
-    subtitle: "YouTube depth + Twitch live control + TikTok discovery — in one room."
-  },
-  totals: { total:0, supports:0, time:0, comfort:0 },
-  feed: [],
-  coins: {},
-  decision: {
-    id: "dp_001",
-    question: "Pick the next twist:",
-    desc: "Spend coins to vote. First 100 coins are strongest; after that, votes diminish.",
-    endsAt: Date.now() + 15*60*1000,
-    closed: false,
-    options: {
-      a: { name: "Ice water face splash (safe)", votes: 0 },
-      b: { name: "Hard Mode for 5 minutes", votes: 0 },
-      c: { name: "No sitting for 10 minutes", votes: 0 }
-    },
-    usedBy: {}
-  },
-  bounties: []
-};
-
-/* ===== Firebase wiring (optional) ===== */
-let localMode = true;
-let refs = null;
-let live = { coinsObj:{}, decision:null, bounties:[], totals:null };
-
-function isFirebaseConfigured(){
-  return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_HERE";
-}
-function setModeLabel(){
-  document.getElementById("modeLabel").innerText = localMode ? "Local" : "Global";
-}
-
-/* ---------- Render helpers ---------- */
-function renderTotals(t){
-  document.getElementById("total").innerText = (t.total||0);
-  document.getElementById("time").innerText = (t.time||0);
-  document.getElementById("comfort").innerText = (t.comfort||0);
-  updateMilestones(t.total||0);
-}
-
-function renderFeed(items){
-  const ul = document.getElementById("recentFeed");
-  ul.innerHTML = "";
-  if(!items || items.length === 0){
-    const li = document.createElement("li");
-    li.className="muted";
-    li.innerText="No actions yet.";
-    ul.appendChild(li);
-    return;
-  }
-  items.slice(0, 10).forEach(it=>{
-    const li=document.createElement("li");
-    li.innerText = it.msg;
-    ul.appendChild(li);
-  });
-}
-
-function renderBounties(items){
-  const ul = document.getElementById("bountyFeed");
-  ul.innerHTML = "";
-  if(!items || items.length === 0){
-    const li=document.createElement("li");
-    li.className="muted";
-    li.innerText="No bounty ideas yet.";
-    ul.appendChild(li);
-    return;
-  }
-  items.slice(0, 10).forEach(it=>{
-    const li=document.createElement("li");
-    const tag = it.status === "approved" ? "✅ Approved" : "⏳ Pending";
-    li.innerText = `${tag} — ${it.text} (by ${it.by})`;
-    ul.appendChild(li);
-  });
-}
-
-function renderCoins(){
-  const name = getUserName();
-  const coins = getMyCoins();
-  const used = getMyUsedThisDecision();
-  document.getElementById("myCoins").innerText = coins;
-  document.getElementById("myUsed").innerText = used;
-  document.getElementById("youName").innerText = name;
-}
-
-function renderDecision(dec){
-  document.getElementById("pollQuestion").innerText = dec.question || "Pick the next twist:";
-  document.getElementById("pollDesc").innerText = dec.desc || "";
-  const container = document.getElementById("pollOptions");
-  container.innerHTML = "";
-
-  // Leader
-  let leaderKey=null, leaderVotes=-1;
-  Object.entries(dec.options||{}).forEach(([k,v])=>{
-    const vv = v.votes||0;
-    if(vv > leaderVotes){ leaderVotes=vv; leaderKey=k; }
-  });
-
-  Object.entries(dec.options||{}).forEach(([key,opt])=>{
-    const div = document.createElement("div");
-    div.className="pollOpt";
-
-    const left = document.createElement("div");
-    left.className="pollLeft";
-
-    const nm = document.createElement("p");
-    nm.className="pollName";
-    nm.innerText = opt.name || key;
-
-    const meta = document.createElement("p");
-    meta.className="pollMeta";
-    meta.innerText = `Votes: ${opt.votes||0}${(key===leaderKey && (opt.votes||0)>0) ? " • 🔥 leading" : ""}`;
-
-    left.appendChild(nm);
-    left.appendChild(meta);
-
-    const btn = document.createElement("button");
-    btn.className="pollBtn secondary";
-    btn.innerText = dec.closed ? "Closed" : "Vote (25 coins)";
-    btn.disabled = !!dec.closed;
-    btn.onclick = () => voteOption(key, 25);
-
-    div.appendChild(left);
-    div.appendChild(btn);
-    container.appendChild(div);
-  });
-
-  window.__currentDecision = dec;
-  tickCountdown();
-}
-
-function renderAllFromLocal(){
-  document.getElementById("arcTitle").innerText = local.arc.title;
-  document.getElementById("arcSubtitle").innerText = local.arc.subtitle;
-  renderTotals(local.totals);
-  renderFeed(local.feed);
-  renderDecision(local.decision);
-  renderBounties(local.bounties);
-  renderCoins();
-}
-
-/* ---------- Milestones ---------- */
-function updateMilestones(total){
-  const m1=25, m2=60;
-  const w1 = Math.min(100, Math.floor((total/m1)*100));
-  const w2 = Math.min(100, Math.floor((total/m2)*100));
-  document.getElementById("m1bar").style.width = w1 + "%";
-  document.getElementById("m2bar").style.width = w2 + "%";
-  document.getElementById("m1txt").innerText = total >= m1 ? "✅ Unlocked: Hard Mode available" : "Locked";
-  document.getElementById("m2txt").innerText = total >= m2 ? "✅ Unlocked: Boss Round available" : "Locked";
-}
-
-/* ---------- Countdown ---------- */
-function fmtMs(ms){
-  const s = Math.max(0, Math.floor(ms/1000));
-  const m = Math.floor(s/60);
-  const r = s % 60;
-  return `${m}m ${String(r).padStart(2,"0")}s`;
-}
-function tickCountdown(){
-  const dec = localMode ? local.decision : (live.decision || window.__currentDecision);
-  if(!dec) return;
-  const endsIn = (dec.endsAt||0) - Date.now();
-  const text = dec.closed ? "Closed" : fmtMs(endsIn);
-  document.getElementById("pollEndsIn").innerText = text;
-  document.getElementById("decisionCountdown").innerText = text;
-
-  // local auto close
-  if(localMode && !dec.closed && endsIn <= 0){
-    local.decision.closed = true;
-    setAlert("🧾 Decision closed (time ended)");
-    renderDecision(local.decision);
-    announceWinner(local.decision);
-  }
-}
-setInterval(tickCountdown, 1000);
-
-/* ---------- Coins ---------- */
-function getMyCoins(){
-  const name = getUserName();
-  if(localMode) return local.coins[name] || 0;
-  return (live.coinsObj && live.coinsObj[name]) ? live.coinsObj[name] : 0;
-}
-function setMyCoins(val){
-  const name = getUserName();
-  val = Math.max(0, (val|0));
-  if(localMode){
-    local.coins[name] = val;
+  function saveProfile(){
+    const raw = (document.getElementById("usernameInput").value || "").trim();
+    if(raw.length < 2){ alert("Please enter at least 2 characters."); return; }
+    const safe = raw.replace(/[^a-zA-Z0-9 _.-]/g, "").slice(0, 20);
+    localStorage.setItem("cv_username", safe);
+    loadProfile();
     renderCoins();
-    return;
   }
-  refs.coins.child(name).set(val);
-}
-function addMyCoins(delta){
-  const name = getUserName();
-  delta = (delta|0);
-  if(localMode){
-    local.coins[name] = (local.coins[name]||0) + delta;
-    renderCoins();
-    return;
+  function resetProfile(){
+    localStorage.removeItem("cv_username");
+    localStorage.removeItem("cv_host");
+    location.reload();
   }
-  refs.coins.child(name).transaction(cur => (cur||0) + delta);
-}
-function getMyUsedThisDecision(){
-  const name = getUserName();
-  const dec = localMode ? local.decision : (live.decision || window.__currentDecision);
-  const used = dec && dec.usedBy && dec.usedBy[name] ? dec.usedBy[name] : 0;
-  return used|0;
-}
 
-/* ---------- Feed logging ---------- */
-function logAction(msg){
-  setAlert(msg);
-  if(localMode){
-    local.feed.unshift({ msg, ts: Date.now() });
-    local.feed = local.feed.slice(0, 12);
+  /***********************
+   * STREAM CONFIG (local)
+   ***********************/
+  function toggleStreamConfig(){
+    const el = document.getElementById("streamConfig");
+    el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
+  }
+  function saveStream(){
+    const provider = document.getElementById("streamProvider").value;
+    const url = (document.getElementById("streamUrl").value || "").trim();
+    if(!url) return alert("Paste an embed URL.");
+    localStorage.setItem("cv_stream_provider", provider);
+    localStorage.setItem("cv_stream_url", url);
+    renderStream();
+    document.getElementById("streamConfig").style.display = "none";
+  }
+  function escapeHtml(s){
+    return String(s).replace(/"/g, "&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+  function renderStream(){
+    const provider = localStorage.getItem("cv_stream_provider");
+    const url = localStorage.getItem("cv_stream_url");
+    const label = document.getElementById("streamSourceLabel");
+    const frame = document.getElementById("videoFrame");
+    if(!provider || !url){
+      label.innerText = "Placeholder";
+      frame.innerHTML = `
+        <div style="text-align:center; max-width: 520px;">
+          <p style="margin:0; font-weight:900; font-size:16px;">⏳ Live Starting Soon</p>
+          <p class="muted" style="margin:8px 0 0 0;">Add a YouTube/Twitch embed in “Set Stream”.</p>
+        </div>`;
+      return;
+    }
+    label.innerText = provider === "youtube" ? "YouTube" : "Twitch";
+    frame.innerHTML = `<iframe src="${escapeHtml(url)}" allowfullscreen></iframe>`;
+  }
+
+  /***********************
+   * UI HELPERS
+   ***********************/
+  function setAlert(text){
+    const el = document.getElementById("liveAlert");
+    el.innerText = text;
+    el.style.display = "block";
+    clearTimeout(window.__alertTimer);
+    window.__alertTimer = setTimeout(() => { el.style.display = "none"; }, 2200);
+  }
+  function fmtMs(ms){
+    const s = Math.max(0, Math.floor(ms/1000));
+    const m = Math.floor(s/60);
+    const r = s % 60;
+    return `${m}m ${String(r).padStart(2,"0")}s`;
+  }
+
+  /***********************
+   * LOCAL DEFAULT STATE
+   ***********************/
+  let local = {
+    totals: { total:0, supports:0, time:0, comfort:0 },
+    feed: [],
+    coins: {},
+    decision: {
+      endsAt: Date.now() + 15*60*1000,
+      closed: false,
+      question: "Pick the next twist:",
+      desc: "Spend coins to vote. First 100 coins strongest; then diminished.",
+      options: {
+        a: { name:"Ice water face splash (safe)", votes: 0 },
+        b: { name:"Hard Mode for 5 minutes", votes: 0 },
+        c: { name:"No sitting for 10 minutes", votes: 0 }
+      },
+      usedBy: {}
+    },
+    bounties: []
+  };
+
+  /***********************
+   * FIREBASE (optional)
+   ***********************/
+  let localMode = true;
+  let refs = null;
+  let live = { totals:null, coinsObj:{}, decision:null, bounties:[] };
+
+  function isFirebaseConfigured(){
+    return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_HERE";
+  }
+  function setModeLabel(){
+    document.getElementById("modeLabel").innerText = localMode ? "Local" : "Global";
+  }
+
+  async function initData(){
+    localMode = true;
+    setModeLabel();
+
+    if(!isFirebaseConfigured()){
+      console.log("LOCAL MODE: paste Firebase config to go global.");
+      renderAllFromLocal();
+      return;
+    }
+
+    const CONNECT_TIMEOUT_MS = 2200;
+    try{ firebase.initializeApp(firebaseConfig); } catch(e){ /* already init */ }
+
+    const db = firebase.database();
+    refs = {
+      totals: db.ref("challengeHub/totals"),
+      feed: db.ref("challengeHub/feed"),
+      coins: db.ref("challengeHub/coins"),
+      decision: db.ref("challengeHub/decision"),
+      bounties: db.ref("challengeHub/bounties")
+    };
+
+    const connectPromise = new Promise((resolve, reject) => {
+      refs.totals.once("value").then(()=> resolve(true)).catch(reject);
+    });
+    const timeoutPromise = new Promise(resolve => setTimeout(()=> resolve(false), CONNECT_TIMEOUT_MS));
+
+    let ok = false;
+    try{ ok = await Promise.race([connectPromise, timeoutPromise]); } catch(e){ ok = false; }
+
+    if(!ok){
+      console.log("Firebase blocked/slow -> staying LOCAL.");
+      localMode = true;
+      setModeLabel();
+      renderAllFromLocal();
+      return;
+    }
+
+    localMode = false;
+    setModeLabel();
+
+    // seed
+    refs.totals.get().then(s => { if(!s.exists()) refs.totals.set(local.totals); });
+    refs.decision.get().then(s => { if(!s.exists()) refs.decision.set(local.decision); });
+
+    // listeners
+    refs.totals.on("value", snap => {
+      live.totals = snap.val() || local.totals;
+      renderTotals(live.totals);
+    });
+
+    refs.feed.limitToLast(10).on("value", snap => {
+      const obj = snap.val() || {};
+      const items = Object.values(obj).sort((a,b)=> (b.ts||0)-(a.ts||0));
+      renderFeed(items);
+    });
+
+    refs.coins.on("value", snap => {
+      live.coinsObj = snap.val() || {};
+      renderCoins();
+    });
+
+    refs.decision.on("value", snap => {
+      live.decision = snap.val() || local.decision;
+      renderDecision(live.decision);
+      tickCountdown();
+    });
+
+    refs.bounties.limitToLast(12).on("value", snap => {
+      const obj = snap.val() || {};
+      const items = Object.entries(obj).map(([id,v]) => ({ id, ...v }))
+        .sort((a,b)=> (b.ts||0)-(a.ts||0));
+      live.bounties = items;
+      renderBounties(items);
+    });
+  }
+
+  /***********************
+   * RENDER
+   ***********************/
+  function renderTotals(t){
+    document.getElementById("total").innerText = (t.total||0);
+    document.getElementById("time").innerText = (t.time||0);
+    document.getElementById("comfort").innerText = (t.comfort||0);
+    updateMilestones(t.total||0);
+  }
+  function renderFeed(items){
+    const ul = document.getElementById("recentFeed");
+    ul.innerHTML = "";
+    if(!items || items.length === 0){
+      ul.innerHTML = `<li class="muted">No actions yet.</li>`;
+      return;
+    }
+    items.slice(0, 10).forEach(it=>{
+      const li=document.createElement("li");
+      li.innerText = it.msg;
+      ul.appendChild(li);
+    });
+  }
+  function renderBounties(items){
+    const ul = document.getElementById("bountyFeed");
+    ul.innerHTML = "";
+    if(!items || items.length === 0){
+      ul.innerHTML = `<li class="muted">No bounty ideas yet.</li>`;
+      return;
+    }
+    items.slice(0, 10).forEach(it=>{
+      const li=document.createElement("li");
+      const tag = it.status === "approved" ? "✅ Approved" : "⏳ Pending";
+      li.innerText = `${tag} — ${it.text} (by ${it.by})`;
+      ul.appendChild(li);
+    });
+  }
+  function renderCoins(){
+    const name = getUserName();
+    document.getElementById("youName").innerText = name;
+    document.getElementById("myCoins").innerText = getMyCoins();
+    document.getElementById("myUsed").innerText = getMyUsedThisDecision();
+  }
+  function renderDecision(dec){
+    document.getElementById("pollQuestion").innerText = dec.question || "Pick the next twist:";
+    document.getElementById("pollDesc").innerText = dec.desc || "";
+    const container = document.getElementById("pollOptions");
+    container.innerHTML = "";
+
+    Object.entries(dec.options||{}).forEach(([key,opt])=>{
+      const div = document.createElement("div");
+      div.className="pollOpt";
+
+      const left = document.createElement("div");
+      left.className="pollLeft";
+      left.innerHTML = `<p class="pollName">${opt.name||key}</p><p class="pollMeta">Votes: ${opt.votes||0}${dec.closed?" • closed":""}</p>`;
+
+      const btn = document.createElement("button");
+      btn.className="pollBtn secondary";
+      btn.innerText = dec.closed ? "Closed" : `Vote (${VOTE_COST} coins)`;
+      btn.disabled = !!dec.closed;
+      btn.onclick = () => voteOption(key, VOTE_COST);
+
+      div.appendChild(left);
+      div.appendChild(btn);
+      container.appendChild(div);
+    });
+  }
+  function renderAllFromLocal(){
+    renderTotals(local.totals);
     renderFeed(local.feed);
-    return;
+    renderBounties(local.bounties);
+    renderDecision(local.decision);
+    renderCoins();
+    tickCountdown();
   }
-  refs.feed.push({ msg, ts: Date.now() });
-}
 
-/* ---------- Support actions ---------- */
-function supportAction(type, pounds){
-  const name = getUserName();
-  const coins = pounds * COINS_PER_POUND;
+  function updateMilestones(total){
+    const m1=25, m2=60;
+    document.getElementById("m1bar").style.width = Math.min(100, Math.floor((total/m1)*100)) + "%";
+    document.getElementById("m2bar").style.width = Math.min(100, Math.floor((total/m2)*100)) + "%";
+    document.getElementById("m1txt").innerText = total >= m1 ? "✅ Unlocked: Hard Mode available" : "Locked";
+    document.getElementById("m2txt").innerText = total >= m2 ? "✅ Unlocked: Boss Round available" : "Locked";
+  }
 
-  const msg =
-    type === "time"
+  /***********************
+   * COUNTDOWN
+   ***********************/
+  function getDecision(){
+    return localMode ? local.decision : (live.decision || local.decision);
+  }
+  function tickCountdown(){
+    const dec = getDecision();
+    const endsIn = (dec.endsAt||0) - Date.now();
+    const text = dec.closed ? "Closed" : fmtMs(endsIn);
+    document.getElementById("pollEndsIn").innerText = text;
+    document.getElementById("decisionCountdown").innerText = text;
+
+    if(localMode && !dec.closed && endsIn <= 0){
+      local.decision.closed = true;
+      renderDecision(local.decision);
+      announceWinner(local.decision);
+      setAlert("🧾 Decision closed (time ended)");
+    }
+  }
+  setInterval(tickCountdown, 1000);
+
+  /***********************
+   * COINS
+   ***********************/
+  function getMyCoins(){
+    const name = getUserName();
+    if(localMode) return local.coins[name] || 0;
+    return (live.coinsObj && live.coinsObj[name]) ? live.coinsObj[name] : 0;
+  }
+  function setMyCoins(val){
+    const name = getUserName();
+    val = Math.max(0, (val|0));
+    if(localMode){
+      local.coins[name] = val;
+      renderCoins();
+      return;
+    }
+    refs.coins.child(name).set(val);
+  }
+  function addMyCoins(delta){
+    const name = getUserName();
+    delta = (delta|0);
+    if(localMode){
+      local.coins[name] = (local.coins[name]||0) + delta;
+      renderCoins();
+      return;
+    }
+    refs.coins.child(name).transaction(cur => (cur||0) + delta);
+  }
+  function getMyUsedThisDecision(){
+    const name = getUserName();
+    const dec = getDecision();
+    return (dec.usedBy && dec.usedBy[name]) ? (dec.usedBy[name]|0) : 0;
+  }
+
+  /***********************
+   * FEED LOGGING
+   ***********************/
+  function logAction(msg){
+    setAlert(msg);
+    if(localMode){
+      local.feed.unshift({ msg, ts: Date.now() });
+      local.feed = local.feed.slice(0, 12);
+      renderFeed(local.feed);
+      return;
+    }
+    refs.feed.push({ msg, ts: Date.now() });
+  }
+
+  /***********************
+   * SUPPORT ACTIONS
+   ***********************/
+  function supportAction(type, pounds){
+    const name = getUserName();
+    if(name === "Anonymous") return alert("Set a display name first.");
+
+    const coins = pounds * COINS_PER_POUND;
+    const msg = type === "time"
       ? `⚡ ${name} supported £${pounds} → +${pounds} minute (+${coins} coins)`
       : `😈 ${name} supported £${pounds} → comfort removed (+${coins} coins)`;
 
-  if(localMode){
-    local.totals.total += pounds;
-    local.totals.supports += 1;
-    if(type === "time") local.totals.time += pounds;
-    if(type === "comfort") local.totals.comfort += 1;
-    renderTotals(local.totals);
+    if(localMode){
+      local.totals.total += pounds;
+      local.totals.supports += 1;
+      if(type === "time") local.totals.time += pounds;
+      if(type === "comfort") local.totals.comfort += 1;
+      renderTotals(local.totals);
+      addMyCoins(coins);
+      logAction(msg);
+      return;
+    }
+
+    refs.totals.child("total").transaction(cur => (cur||0) + pounds);
+    refs.totals.child("supports").transaction(cur => (cur||0) + 1);
+    if(type === "time") refs.totals.child("time").transaction(cur => (cur||0) + pounds);
+    if(type === "comfort") refs.totals.child("comfort").transaction(cur => (cur||0) + 1);
+
     addMyCoins(coins);
     logAction(msg);
-    return;
   }
 
-  refs.totals.child("total").transaction(cur => (cur||0) + pounds);
-  refs.totals.child("supports").transaction(cur => (cur||0) + 1);
-  if(type === "time") refs.totals.child("time").transaction(cur => (cur||0) + pounds);
-  if(type === "comfort") refs.totals.child("comfort").transaction(cur => (cur||0) + 1);
+  /***********************
+   * VOTING
+   ***********************/
+  function voteOption(optionKey, coinSpend){
+    const name = getUserName();
+    if(name === "Anonymous") return alert("Set a display name first.");
 
-  addMyCoins(coins);
-  logAction(msg);
-}
+    const dec = getDecision();
+    if(!dec || dec.closed) return alert("Decision is closed.");
 
-/* ---------- Voting ---------- */
-function voteOption(optionKey, coinSpend){
-  const name = getUserName();
-  if(name === "Anonymous"){ alert("Set a display name first."); return; }
+    const myCoins = getMyCoins();
+    if(myCoins < coinSpend) return alert("Not enough coins. Support actions to earn coins.");
 
-  const dec = localMode ? local.decision : (live.decision || window.__currentDecision);
-  if(!dec || dec.closed){ alert("Decision is closed."); return; }
+    const used = getMyUsedThisDecision();
+    if(used + coinSpend > CAP_PER_DECISION) return alert(`Cap reached. Max ${CAP_PER_DECISION} coins per decision.`);
 
-  const myCoins = getMyCoins();
-  if(myCoins < coinSpend){ alert("Not enough coins. Support actions to earn coins."); return; }
+    const gainedVotes = votePower(coinSpend);
+    const optName = (dec.options && dec.options[optionKey] && dec.options[optionKey].name) ? dec.options[optionKey].name : optionKey;
+    const announce = `🗳️ ${name} voted ${coinSpend} coins on "${optName}" (+${gainedVotes} power)`;
 
-  const used = getMyUsedThisDecision();
-  if(used + coinSpend > CAP_PER_DECISION){
-    alert(`Cap reached. Max ${CAP_PER_DECISION} coins per decision.`);
-    return;
-  }
+    if(localMode){
+      setMyCoins(myCoins - coinSpend);
+      dec.usedBy[name] = (dec.usedBy[name]||0) + coinSpend;
+      dec.options[optionKey].votes = (dec.options[optionKey].votes||0) + gainedVotes;
+      renderDecision(dec);
+      renderCoins();
+      logAction(announce);
+      return;
+    }
 
-  const gainedVotes = votePower(coinSpend);
-  const optName = (dec.options && dec.options[optionKey] && dec.options[optionKey].name) ? dec.options[optionKey].name : optionKey;
-  const announce = `🗳️ ${name} voted ${coinSpend} coins on "${optName}" (+${gainedVotes} power)`;
-
-  if(localMode){
-    setMyCoins(myCoins - coinSpend);
-    dec.usedBy[name] = (dec.usedBy[name]||0) + coinSpend;
-    dec.options[optionKey].votes = (dec.options[optionKey].votes||0) + gainedVotes;
-    renderDecision(dec);
-    renderCoins();
-    logAction(announce);
-    return;
-  }
-
-  // Spend coins (best-effort)
-  refs.coins.child(name).transaction(cur => {
-    cur = cur || 0;
-    if(cur < coinSpend) return;
-    return cur - coinSpend;
-  });
-
-  refs.decision.child("usedBy").child(name).transaction(cur => (cur||0) + coinSpend);
-  refs.decision.child("options").child(optionKey).child("votes").transaction(cur => (cur||0) + gainedVotes);
-
-  logAction(announce);
-}
-
-/* ---------- Decision winner ---------- */
-function announceWinner(dec){
-  const entries = Object.entries(dec.options||{}).sort((a,b)=> (b[1].votes||0)-(a[1].votes||0));
-  const top = entries[0];
-  if(!top){ logAction("🧾 Decision closed — no votes."); return; }
-  logAction(`🏁 Decision result: "${top[1].name}" wins with ${top[1].votes||0} votes`);
-}
-
-/* ---------- Bounty board ---------- */
-function sanitizeIdea(text){
-  return (text||"").replace(/[^\w\s.,!?'"()-]/g, "").trim().slice(0, 180);
-}
-function submitBounty(){
-  const name = getUserName();
-  if(name === "Anonymous"){ alert("Set a display name first."); return; }
-
-  const idea = sanitizeIdea(document.getElementById("bountyText").value || "");
-  if(idea.length < 8){ alert("Write a clearer idea (at least 8 characters)."); return; }
-
-  const cost = 30;
-  const coins = getMyCoins();
-  if(coins < cost){ alert("Not enough coins. Support actions to earn coins."); return; }
-
-  setMyCoins(coins - cost);
-  document.getElementById("bountyText").value = "";
-
-  const bounty = { text: idea, by: name, ts: Date.now(), status: "pending" };
-
-  if(localMode){
-    local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
-    local.bounties = local.bounties.slice(0, 20);
-    renderBounties(local.bounties);
-    logAction(`🧩 ${name} submitted a bounty idea (pending)`);
-    return;
-  }
-
-  refs.bounties.push(bounty);
-  logAction(`🧩 ${name} submitted a bounty idea (pending)`);
-}
-
-function approveLatestBounty(){
-  if(localStorage.getItem("cv_host") !== "yes"){ alert("Host only."); return; }
-
-  if(localMode){
-    const item = local.bounties.find(b=> b.status === "pending");
-    if(!item){ alert("No pending bounties."); return; }
-    item.status = "approved";
-    renderBounties(local.bounties);
-    logAction(`✅ Host approved a bounty: "${item.text}"`);
-    return;
-  }
-
-  const pending = (live.bounties || []).find(b=> b.status === "pending");
-  if(!pending){ alert("No pending bounties."); return; }
-  refs.bounties.child(pending.id).child("status").set("approved");
-  logAction(`✅ Host approved a bounty: "${pending.text}"`);
-}
-
-/* ---------- Host actions ---------- */
-function closeDecision(){
-  if(localStorage.getItem("cv_host") !== "yes"){ alert("Host only."); return; }
-  if(localMode){
-    local.decision.closed = true;
-    renderDecision(local.decision);
-    announceWinner(local.decision);
-    return;
-  }
-  refs.decision.child("closed").set(true);
-}
-
-function resetEvent(){
-  if(localStorage.getItem("cv_host") !== "yes"){ alert("Host only."); return; }
-  const msg = "🔁 Host reset the event";
-
-  if(localMode){
-    local.totals = { total:0, supports:0, time:0, comfort:0 };
-    local.feed = [];
-    local.decision.closed = false;
-    local.decision.endsAt = Date.now() + 15*60*1000;
-    local.decision.usedBy = {};
-    Object.values(local.decision.options).forEach(o => o.votes = 0);
-    local.bounties = [];
-    renderTotals(local.totals);
-    renderFeed(local.feed);
-    renderDecision(local.decision);
-    renderBounties(local.bounties);
-    logAction(msg);
-    return;
-  }
-
-  refs.totals.set({ total:0, supports:0, time:0, comfort:0 });
-  refs.feed.remove();
-  refs.bounties.remove();
-  refs.decision.update({
-    closed: false,
-    endsAt: Date.now() + 15*60*1000,
-    usedBy: null
-  });
-
-  refs.decision.child("options").get().then(snap=>{
-    const obj = snap.val() || {};
-    Object.keys(obj).forEach(k=>{
-      refs.decision.child("options").child(k).child("votes").set(0);
+    refs.coins.child(name).transaction(cur => {
+      cur = cur || 0;
+      if(cur < coinSpend) return;
+      return cur - coinSpend;
     });
-  });
+    refs.decision.child("usedBy").child(name).transaction(cur => (cur||0) + coinSpend);
+    refs.decision.child("options").child(optionKey).child("votes").transaction(cur => (cur||0) + gainedVotes);
 
-  logAction(msg);
-}
-
-/* ---------- Firebase init (safe + fast) ---------- */
-async function initData(){
-  localMode = true;
-  setModeLabel();
-
-  if(!isFirebaseConfigured()){
-    console.log("LOCAL MODE: paste Firebase config to go global.");
-    renderAllFromLocal();
-    return;
+    logAction(announce);
   }
 
-  const CONNECT_TIMEOUT_MS = 2200;
+  function announceWinner(dec){
+    const entries = Object.entries(dec.options||{}).sort((a,b)=> (b[1].votes||0)-(a[1].votes||0));
+    const top = entries[0];
+    if(!top) return logAction("🧾 Decision closed — no votes.");
+    logAction(`🏁 Decision result: "${top[1].name}" wins with ${top[1].votes||0} votes`);
+  }
 
-  try{ firebase.initializeApp(firebaseConfig); } catch(e){ /* already init */ }
+  /***********************
+   * BOUNTIES
+   ***********************/
+  function sanitizeIdea(text){
+    return (text||"").replace(/[^\w\s.,!?'"()-]/g, "").trim().slice(0, 180);
+  }
+  function submitBounty(){
+    const name = getUserName();
+    if(name === "Anonymous") return alert("Set a display name first.");
 
-  const db = firebase.database();
-  refs = {
-    arc: db.ref("challengeHub/arc"),
-    totals: db.ref("challengeHub/totals"),
-    feed: db.ref("challengeHub/feed"),
-    coins: db.ref("challengeHub/coins"),
-    decision: db.ref("challengeHub/decision"),
-    bounties: db.ref("challengeHub/bounties")
-  };
+    const idea = sanitizeIdea(document.getElementById("bountyText").value || "");
+    if(idea.length < 8) return alert("Write a clearer idea (at least 8 characters).");
 
-  const connectPromise = new Promise((resolve, reject) => {
-    refs.totals.once("value").then(()=> resolve(true)).catch(reject);
-  });
-  const timeoutPromise = new Promise(resolve => setTimeout(()=> resolve(false), CONNECT_TIMEOUT_MS));
+    const coins = getMyCoins();
+    if(coins < BOUNTY_COST) return alert("Not enough coins.");
 
-  let ok = false;
-  try{ ok = await Promise.race([connectPromise, timeoutPromise]); }
-  catch(e){ ok = false; }
+    setMyCoins(coins - BOUNTY_COST);
+    document.getElementById("bountyText").value = "";
 
-  if(!ok){
-    console.log("Firebase blocked/slow -> staying LOCAL.");
+        const bounty = { text: idea, by: name, ts: Date.now(), status: "pending" };
+
+    if(localMode){
+      local.bounties.unshift({ id: "b_" + Date.now(), ...bounty });
+      local.bounties = local.bounties.slice(0, 20);
+      renderBounties(local.bounties);
+      logAction(`🧩 ${name} submitted a bounty idea (pending)`);
+      return;
+    }
+
+    refs.bounties.push(bounty);
+    logAction(`🧩 ${name} submitted a bounty idea (pending)`);
+  }
+
+  function approveLatestBounty(){
+    if(!isHost()) return alert("Host only.");
+
+    if(localMode){
+      const item = local.bounties.find(b => b.status === "pending");
+      if(!item) return alert("No pending bounties.");
+      item.status = "approved";
+      renderBounties(local.bounties);
+      logAction(`✅ Host approved a bounty: "${item.text}"`);
+      return;
+    }
+
+    const pending = (live.bounties || []).find(b => b.status === "pending");
+    if(!pending) return alert("No pending bounties.");
+    refs.bounties.child(pending.id).child("status").set("approved");
+    logAction(`✅ Host approved a bounty: "${pending.text}"`);
+  }
+
+  /***********************
+   * HOST ACTIONS
+   ***********************/
+  function closeDecision(){
+    if(!isHost()) return alert("Host only.");
+
+    if(localMode){
+      local.decision.closed = true;
+      renderDecision(local.decision);
+      announceWinner(local.decision);
+      return;
+    }
+
+    refs.decision.child("closed").set(true);
+  }
+
+  function resetEvent(){
+    if(!isHost()) return alert("Host only.");
+    const msg = "🔁 Host reset the event";
+
+    if(localMode){
+      local.totals = { total:0, supports:0, time:0, comfort:0 };
+      local.feed = [];
+      local.decision.closed = false;
+      local.decision.endsAt = Date.now() + 15*60*1000;
+      local.decision.usedBy = {};
+      Object.values(local.decision.options).forEach(o => o.votes = 0);
+      local.bounties = [];
+      renderAllFromLocal();
+      logAction(msg);
+      return;
+    }
+
+    refs.totals.set({ total:0, supports:0, time:0, comfort:0 });
+    refs.feed.remove();
+    refs.bounties.remove();
+    refs.decision.update({
+      closed: false,
+      endsAt: Date.now() + 15*60*1000,
+      usedBy: null
+    });
+
+    refs.decision.child("options").get().then(snap=>{
+      const obj = snap.val() || {};
+      Object.keys(obj).forEach(k=>{
+        refs.decision.child("options").child(k).child("votes").set(0);
+      });
+    });
+
+    logAction(msg);
+  }
+
+  /***********************
+   * BOOT
+   ***********************/
+  document.getElementById("capLabel").innerText = CAP_PER_DECISION;
+
+  loadProfile();
+  updateHostUI();
+  renderStream();
+  renderAllFromLocal();
+
+  initData().catch(err=>{
+    console.log("Init error:", err);
     localMode = true;
     setModeLabel();
     renderAllFromLocal();
-    return;
-  }
-
-  localMode = false;
-  setModeLabel();
-
-  // Defaults
-  refs.arc.get().then(s => { if(!s.exists()) refs.arc.set(local.arc); });
-  refs.totals.get().then(s => { if(!s.exists()) refs.totals.set(local.totals); });
-  refs.decision.get().then(s => { if(!s.exists()) refs.decision.set(local.decision); });
-
-  // Listeners
-  refs.arc.on("value", snap => {
-    const a = snap.val() || local.arc;
-    document.getElementById("arcTitle").innerText = a.title || local.arc.title;
-    document.getElementById("arcSubtitle").innerText = a.subtitle || local.arc.subtitle;
   });
-
-  refs.totals.on("value", snap => {
-    live.totals = snap.val() || { total:0, supports:0, time:0, comfort:0 };
-    renderTotals(live.totals);
-  });
-
-  refs.feed.limitToLast(10).on("value", snap => {
-    const obj = snap.val() || {};
-    const items = Object.values(obj).sort((a,b)=> (b.ts||0)-(a.ts||0));
-    renderFeed(items);
-  });
-
-  refs.coins.on("value", snap => {
-    live.coinsObj = snap.val() || {};
-    renderCoins();
-  });
-
-  refs.decision.on("value", snap => {
-    live.decision = snap.val() || local.decision;
-    renderDecision(live.decision);
-    if(live.decision.closed && !window.__announced){
-      window.__announced = true;
-      announceWinner(live.decision);
-    }
-    if(!live.decision.closed) window.__announced = false;
-  });
-
-  refs.bounties.limitToLast(12).on("value", snap => {
-    const obj = snap.val() || {};
-    const items = Object.entries(obj).map(([id,v]) => ({ id, ...v }))
-      .sort((a,b)=> (b.ts||0)-(a.ts||0));
-    live.bounties = items;
-    renderBounties(items);
-  });
-}
-
-/* ---------- Boot ---------- */
-loadProfile();
-updateHostUI();
-renderStream();
-
-initData().catch(err=>{
-  console.log("Init error:", err);
-  localMode = true;
-  setModeLabel();
-  renderAllFromLocal();
-});
-</script>
+  </script>
+</body>
+</html>
