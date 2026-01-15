@@ -714,7 +714,45 @@
 /***********************
  * CONFIG (Firebase optional)
  ***********************/
-const firebaseConfig = {
+/***********************
+ * ROOMS (ecosystem foundation)
+ ***********************/
+function sanitizeRoom(str){
+  return (str || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, "")
+    .slice(0, 32);
+}
+
+function getRoom(){
+  const url = new URL(location.href);
+  const fromUrl = sanitizeRoom(url.searchParams.get("room"));
+  const fromLocal = sanitizeRoom(localStorage.getItem("cv_room"));
+  return fromUrl || fromLocal || "challengehub";
+}
+
+function setRoom(room){
+  room = sanitizeRoom(room);
+  if(!room) room = "challengehub";
+
+  localStorage.setItem("cv_room", room);
+
+  const url = new URL(location.href);
+  url.searchParams.set("room", room);
+  history.replaceState({}, "", url.toString());
+
+  const label = document.getElementById("roomKey");
+  if(label) label.innerText = room;
+}
+
+function copyRoomLink(){
+  const room = getRoom();
+  const url = new URL(location.href);
+  url.searchParams.set("room", room);
+  navigator.clipboard.writeText(url.toString());
+  setAlert("🔗 Room link copied");
+}
+  const firebaseConfig = {
   apiKey: "PASTE_HERE",
   authDomain: "PASTE_HERE",
   databaseURL: "PASTE_HERE",
@@ -942,14 +980,16 @@ async function initData(){
   try{ firebase.initializeApp(firebaseConfig); } catch(e){ /* already init */ }
 
   const db = firebase.database();
-  refs = {
-    arc: db.ref("challengeHub/arc"),
-    totals: db.ref("challengeHub/totals"),
-    feed: db.ref("challengeHub/feed"),
-    coins: db.ref("challengeHub/coins"),
-    decision: db.ref("challengeHub/decision"),
-    bounties: db.ref("challengeHub/bounties")
-  };
+  const room = getRoom();
+
+refs = {
+  arc: db.ref(`${room}/arc`),
+  totals: db.ref(`${room}/totals`),
+  feed: db.ref(`${room}/feed`),
+  coins: db.ref(`${room}/coins`),
+  decision: db.ref(`${room}/decision`),
+  bounties: db.ref(`${room}/bounties`)
+};
 
   const connectPromise = new Promise((resolve, reject) => {
     refs.totals.once("value").then(()=> resolve(true)).catch(reject);
