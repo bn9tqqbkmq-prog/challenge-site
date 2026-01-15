@@ -45,15 +45,31 @@
     }
 
     button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      background: #ff4d4d;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
+  width:100%;
+  padding:14px 16px;
+  margin-top:10px;
+
+  border:none;
+  border-radius:12px;
+
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+
+  background: linear-gradient(135deg, #ff4d4d 0%, #ff1f6a 100%);
+  box-shadow: 0 10px 20px rgba(255,77,77,0.25);
+
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+button:hover{
+  filter: brightness(1.08);
+}
+
+button:active{
+  transform: scale(0.97);
+}
     }
 
     button.secondary {
